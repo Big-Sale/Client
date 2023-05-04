@@ -1,0 +1,158 @@
+html, body, div, form, fieldset, legend, label {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th, td {
+    text-align: left;
+    vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6, th, td, caption { 
+    font-weight: normal; 
+}
+
+img {
+    border: 0; 
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 0%, rgba(187,174,174,1) 100%);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: #ffffff;
+  border-bottom: 20px;
+  
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+  
+.header-left h2 {
+      font-family: 'Quicksand', sans-serif;
+      user-select: none;
+      margin: 0 20px;
+  
+}
+
+.publish-button {
+    border: none;
+    border-radius: 5px;
+    background-color: #59a56b;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+.user-name {
+      font-family: 'Quicksand', sans-serif;
+      margin-right: 2vh;
+      user-select: none;
+}
+
+.cart {
+    margin-right: 2vh;
+}
+
+.cart > svg {
+    cursor: pointer;
+}
+
+.user-nav {
+    margin-right: 1vh;
+}
+
+.user-nav > svg {
+    cursor: pointer;
+}
+
+.cart > svg:hover, .user-nav > svg:hover {
+    animation: changeFill 0.3s forwards;
+}
+
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.change-button:hover, .publish-button:hover {
+    background-color: #555454;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-top: 1px;
+    
+    /* animation: fadeInAnimation ease 1s; */
+}
+
+#credits {
+    font-family: 'Quicksand', sans-serif;
+    list-style-type: none;
+    user-select: none;
+    font-size: 15px;
+    
+}
+
+#credits a {
+    margin: 5px;
+}
+
+@keyframes changeFill {
+    from {
+        fill: white;
+    }
+    to {
+        fill: rgb(154, 158, 181);
+    }
+}
+
+@keyframes changeSVGFill {
+    from {
+        fill: none;
+    }
+    to {
+        fill: black;
+    }
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }    
+}
