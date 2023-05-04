@@ -27,6 +27,7 @@ connection.onmessage = function(evt) {
 
 function handleLogin(success) {
     if (success) {
+        connection.send
         //handle login succeess
     } else {
         //handle login fail.

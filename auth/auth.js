@@ -61,6 +61,7 @@ form.addEventListener('submit', function(e) {
     
     showLoading(loginButton);
     setTimeout(() => {
+
         form.submit();
     }, 3000)
 });
@@ -83,6 +84,11 @@ submitRegisterButton.addEventListener('click', () => {
  * 
  * <--------------------------------------------------------------------------------->
 */
+
+/**
+ * Process user input for validity when registering as a new user
+ * @returns 
+ */
 
 function validUserDetails() {
     // TODO

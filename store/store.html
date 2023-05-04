@@ -22,7 +22,7 @@
             <div class="user-name">
                 <p>Anthon</p>
             </div>
-            <div class="cart">
+            <div id="cart-btn" class="cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
             </div>
             <div class="user-nav" id="profile-link">
@@ -56,27 +56,56 @@
         </div>
     </div>
     <div id="publish-popup-container">
-
+        <span>Enter Product Details</span>
         <input type="text" placeholder="Name *" required>
-        <input type="text" placeholder="Category *" required>
+        <input type="text" list="categories" placeholder="Category *" required>
+
         <input type="text" placeholder="Price *" required>
-        <input type="date" placeholder="Production Year *" required>
+        <input type="number" placeholder="Production Year" min="1900" max="2099" step="1"/>
         <input type="text" placeholder="Color *" required>
         <input type="text" list="conditions" placeholder="Condition *" required>
+        <datalist id="categories">
+                <option value="Stuff1"></option>
+                <option value="Stuff2"></option>
+                <option value="Stuff3"></option>
+                <option value="Stuff4"></option>
+                <option value="Stuff5"></option>
+                <option value="Stuff6"></option>
+                <option value="Stuff7"></option>
+                <option value="Stuff8"></option>
+            </datalist>
+        </datalist>
         <datalist id="conditions">
             <option value="New"></option>
             <option value="Very good"></option>
             <option value="Good"></option>
             <option value="Not Working Properly"></option>
         </datalist>
+        <div class="publish-button-container">
+            <button id="submit-publish-btn" class="publish-product-button">Submit</button>
+            <button id="close-publish-popup-btn" class="close-publish-container-button">Close</button>
+        </div>
+    </div>
+    <div id="cart-popup-container">
+        <span>Your Cart</span>
+        <ul>
+            <li></li>
+            <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
+            <li>Förbrukade Konsertbiljetter</li>
+            <li>"Samlade Harklingar" av Christian</li>
+        </ul>
+        <div class="cart-button-container">
+            <button id="checkout-btn">Check-Out</button>
+            <button id="close-cart-btn">Close</button>
+        </div>
     </div>
     <footer id="footer">
         <ul id="credits">
-            <a>Name</a>
-            <a>Name</a>
-            <a>Name</a>
-            <a>Name</a>
-            <a>Name</a>            
+            <a>Anna</a>
+            <a>Anthon</a>
+            <a>Christian</a>
+            <a>Luke</a>
+            <a>Vincent</a>            
         </ul>
     </footer>
 </body>
