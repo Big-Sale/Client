@@ -95,6 +95,21 @@ header {
     animation: changeFill 0.3s forwards;
 }
 
+#orders-overlay-button {
+    border: none;
+    border-radius: 5px;
+    background-color: #59a56b;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+
+
+
 
 .content {
     flex: 1;
@@ -162,7 +177,7 @@ Generic Button
     transition: background-color 0.25s, box-shadow 0.3s, color 0.3s;
 }
 
-.hover-button:hover {
+.hover-button:hover, #orders-overlay-button:hover {
     color:black;
     background-color: #35e35d;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
@@ -173,7 +188,26 @@ Generic from-to font placement
 */
 
 .order-history-filter-container {
+    margin-top: 5px;
     font-family: "Quicksand", sans-serif;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-history-filter-container input[type="date"] {
+    font-family: "Quicksand", sans-serif;
+    border-radius: 5px;
+    border: none;
+}
+
+.from-to-container span {
+    user-select: none;
+}
+
+#save-client-info-btn {
+    align-self: center;
+    margin-top: 35px;
 }
 
 
@@ -187,7 +221,8 @@ Generic from-to font placement
 
 
 #filter-order-history-btn {
-    
+    margin-top: 10px;
+    align-self: center;
 }
 
 
