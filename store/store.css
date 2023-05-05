@@ -165,25 +165,16 @@ header {
 }
 
 .list-container {
+    display: flex;
+    justify-content: center;
     height: 100%;
     font-family: 'Quicksand', sans-serif;
 }
 
-.product-rows {
-    position: relative;
-    margin: auto; 
-    width: 50%;
-    height: calc(100% - 50px);    
-    text-align: center;
-    font-size:small;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
+#product-list, #product-list td {
+    padding: 10px;
+    
 }
-
-.product-row {
-
-}
-
 
 
 

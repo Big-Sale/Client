@@ -39,20 +39,20 @@
             <button id="search-button" class="search-button">Search</button>
         </div>
         <div class="list-container-container">
-            <div class="list-container">
-                <div class="product-rows">
-                    <div class="product-row">Name</div>
-                    <div class="product-row">Category</div>
-                    <div class="product-row">Price</div>
-                    <div class="product-row">Production Year</div>
-                    <div class="product-row">Color</div>
-                    <div class="product-row">Condition</div>
-                    <div class="product-row">Seller</div>
-                    <div class="product-row">Cart</div>
-                </div>
-                <div id="cock" class="product-columns">
-
-                </div>
+            <div id="table-div" class="list-container">
+                <table id="product-list">
+                    <tr id="list-titles">
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Category</td>
+                        <td>Price</td>
+                        <td>Production Year</td>
+                        <td>Color</td>
+                        <td>Condition</td>
+                        <td>Seller</td>
+                        <td>Cart</td>
+                    </tr> 
+                </table>
             </div>
         </div>
     </div>
@@ -90,13 +90,15 @@
     <div id="cart-popup-container">
         <span>Your Cart</span>
         <div id="cart-container">
-            <ul>
-                <li>"Vem kan vispa förutan visp" - Samlade utgåvor av Vispcent Visplund</li>
-                <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
-                <li>Förbrukade Konsertbiljetter</li>
-                <li>"Samlade Harklingar" av Christian Edvaldi</li>
-                <li>Kned, alt spork</li>
-            </ul>
+            <table id="cart-table">
+                <tr class="cart-titles">
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td>Remove</td>
+                </tr> 
+                
+            </table>
         </div>
         <div class="cart-button-container">
             <button id="checkout-btn">Check-Out</button>
