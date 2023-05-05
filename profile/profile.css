@@ -35,9 +35,8 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
+  border-bottom: outset 2px rgb(255, 255, 255);
   background-color: #ffffff;
-  border-bottom: 20px;
-  
 }
 
 .header-left {
@@ -48,11 +47,11 @@ header {
 .header-left h2 {
       font-family: 'Quicksand', sans-serif;
       user-select: none;
-      margin: 0 20px;
+      margin: 0 10px;
   
 }
 
-.publish-button {
+.pending-orders-button {
     border: none;
     border-radius: 5px;
     background-color: #59a56b;
@@ -88,10 +87,11 @@ header {
 }
 
 .user-nav > svg {
-    cursor: pointer;
+    fill:#b8f4ff;
+
 }
 
-.cart > svg:hover, .user-nav > svg:hover {
+.cart > svg:hover {
     animation: changeFill 0.3s forwards;
 }
 
@@ -99,21 +99,185 @@ header {
 .content {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 
-.change-button:hover, .publish-button:hover {
+.change-button:hover {
     background-color: #555454;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
 }
+
+#notification-container {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+}
+
+#order-history-container {
+    width:33%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+}
+
+#user-info-container {
+    width:33%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+}
+
+.tab > .title {
+    font-family: 'Quicksand', sans-serif;
+    user-select: none;
+    font-size: 20px;
+    margin-top: 20px;
+    align-self: center;
+}
+
+.content-container {
+    padding: 10px;
+    border: inset 1px;;
+    height: 80%;
+    width: 80%;
+    align-self: center;
+    border-radius: 10px;
+}
+/*
+Generic Button
+*/
+.hover-button {
+    font-family: "Quicksand", sans-serif;
+    font-size: 16px;
+    width: calc(50% - 70px);
+    border: none;
+    border-radius: 5px;
+    background-color: #a7a7a7;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s, color 0.3s;
+}
+
+.hover-button:hover {
+    color:black;
+    background-color: #35e35d;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+/*
+Generic from-to font placement
+*/
+
+.order-history-filter-container {
+    font-family: "Quicksand", sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+#filter-order-history-btn {
+    
+}
+
+
+#cart-popup-container {
+    display: none;
+    font-family: 'Quicksand', sans-serif;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    padding: 10px 10px;
+    border: 2px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0;
+    transition: opacity 0.5s forwards;
+}
+
+#cart-popup-container.show {
+    display: flex;
+    opacity: 1;
+}
+
+#cart-popup-container span {
+    align-self: center;
+    user-select: none;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-button-container {
+    margin-top: 8px;
+    display: block;
+}
+
+#checkout-btn {
+    margin-top: 10px;
+    margin-left: 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #59a56b;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    width: calc(50% - 70px);
+    align-self: flex-start;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+#close-cart-btn {
+    margin-top: 10px;
+    margin-left: 85px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a7a7a7;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    width: calc(50% - 70px);
+    align-self:flex-end;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+#cart-container {
+    width:100%;
+    height:75%;
+    
+}
+
+
+
+
+
+
+
+
 
 
 footer {
     display: flex;
     justify-content: space-between;
     background-color: #ffffff;
-    border-top: 1px;
+    border-top: inset 2px rgb(255, 255, 255);
     
     /* animation: fadeInAnimation ease 1s; */
 }
@@ -122,20 +286,35 @@ footer {
     font-family: 'Quicksand', sans-serif;
     list-style-type: none;
     user-select: none;
-    font-size: 15px;
-    
+    font-size: 15px;  
 }
 
 #credits a {
     margin: 5px;
 }
 
+#header, #content, #footer {
+    transition: opacity 0.2s;
+}
+
+#header.blur, #content.blur, #footer.blur {
+    /*
+    Why no worky?
+    user-select: none;
+    */
+    opacity: 0.3;
+}
+
+/*
+Keyframes
+*/
+
 @keyframes changeFill {
     from {
         fill: white;
     }
     to {
-        fill: rgb(154, 158, 181);
+        fill: #b8f4ff;
     }
 }
 
