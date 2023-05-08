@@ -171,14 +171,20 @@ header {
     font-family: 'Quicksand', sans-serif;
 }
 
+
 #product-list, #product-list td {
-    padding: 10px;
-    
+    padding-left: 40px;
+    height: 40px;
 }
 
+#cart-table, #cart-table td {
+    padding-left: 40px;
+    height: 40px;
+}
 
-
-
+.cart-binary-btn {
+    font-size: 15px;
+}
 
 
 

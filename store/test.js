@@ -1,6 +1,4 @@
 var connection = new WebSocket('ws://127.0.0.1:1234');
-
-
 const cart = [];
 
 connection.onopen = function() {
@@ -27,9 +25,12 @@ connection.onmessage = function(evt) {
     } else if (data.type === 'signup') {
         handleSignup(payload)
     } else if (data.type === 'randomProducts') {
+        updateProductTable(payload);
+    }
+}
 
-        let tableContainer = document.getElementById("table-div");
-        
+function updateProductTable(payload) {
+    let tableContainer = document.getElementById("table-div");
         if(payload.length === 0) {
             let error = "<h1>Your stupid search didn't find anything</h1>";
             tableContainer.innerHTML = error;
@@ -51,7 +52,6 @@ connection.onmessage = function(evt) {
                                         </tr>`;
     
             payload.forEach(element => {
-    
                 productTemplate = 
                                 `<tr class="product-row">
                                     <td class="product-column">${element.productId}</td>
@@ -68,7 +68,6 @@ connection.onmessage = function(evt) {
                 console.log('hello')
             });
         }
-    }
 }
 
 function addToCart(productId, name, price) {
@@ -80,7 +79,7 @@ function addToCart(productId, name, price) {
                     <td>${productId}</td>
                     <td>${name}</td>
                     <td>${price}</td>
-                    <td><button class=cart-binary-btn onclick="removeFromCart(${productId})"></td>
+                    <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
                 </tr>`
     let cartTable = document.getElementById("cart-table").innerHTML += template;
 }
@@ -110,4 +109,25 @@ function handleSignup(data) {
     } else {
         //show error
     }
+}
+
+
+function handleSearch(data) {
+    if (data) {
+        connection.send('hej')
+                //show success and/or login user
+    } else {
+        //show error
+    }
+}
+
+function handlePublishProduct(data) {
+    if(success) {
+
+    } else {
+
+    }
+}
+
+function handleBlank() {
 }
