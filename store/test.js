@@ -1,11 +1,11 @@
 //var connection = new WebSocket('ws://127.0.0.1:1234');
-import { getSocket, addMessageListener } from "./websocket";
+import { getSocket, addMessageListener } from "../websocket.js";
 const cart = [];
 var connection = getSocket()
 
 addMessageListener(function(evt) {
-    data = JSON.parse(evt.data);
-    payload = data.payload;
+    let data = JSON.parse(evt.data);
+    let payload = data.payload;
     if (data.type === 'login') {
         handleLogin(payload.success);
     } else if (data.type === 'signup') {
@@ -78,7 +78,7 @@ function updateProductTable(payload) {
                                         </tr>`;
     
             payload.forEach(element => {
-                productTemplate = 
+                let productTemplate = 
                                 `<tr class="product-row">
                                     <td class="product-column">${element.productId}</td>
                                     <td class="product-column">${element.productName}</td>
@@ -91,7 +91,6 @@ function updateProductTable(payload) {
                                     <td class="product-column"><button class="cart-binary-btn" onclick="addToCart(${element.productId}, '${element.productName}', ${element.price})">+</button></td>
                                 </tr>`
                 productContainer.innerHTML += productTemplate
-                console.log('hello')
             });
         }
 }
@@ -120,7 +119,6 @@ function removeFromCart(productId) {
 
 function handleLogin(success) {
     if (success) {
-        connection.send
         //handle login succeess
     } else {
         //handle login fail.

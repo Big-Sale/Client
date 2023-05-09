@@ -35,6 +35,11 @@ publishButton.addEventListener("click", function() {
     footer.classList.add("blur");
 })
 
+profileLink.addEventListener("click", function() {
+    document.location = '../profile/profile.html'
+
+})
+
 closePublishPopUpButton.addEventListener("click", function() {
     publishPopUp.classList.remove("show");
     header.classList.remove("blur");
