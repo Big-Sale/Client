@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Sale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link href="main.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="auth.css" type="text/css">
+    <link rel="stylesheet" href="store.css" type="text/css">
+    <link rel="stylesheet" href="profile.css" type="text/css">
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <script type='module' src="main.js" defer></script>
+</head>
+<body>
+    <header id="header">
+        <div class="header-left">
+          <h2>Totally not a skincare website</h2>
+        </div>
+        <div class="header-right">
+            <div class="user-name">
+                <p>Anthon</p>
+            </div>
+            <div id="cart-btn" class="cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            </div>
+            <div class="user-nav" id="profile-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="39" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+        </div>
+    </header>
+    <div id="main-content">
+        <div id="login-content">
+            <div class="container">
+                <div id="login-container" class="login-container">
+                    <form action="/post-login.html" method="post">
+                        <input type="text" placeholder="Username" name="username" required minlength="">
+                        <input type="password" placeholder="Password" name="password" required>
+                        <button id="login" class="btn-login" type="submit" value="Login">
+                            <div class="login-span">Log in</div>
+                            <div class="lds-ripple"><div></div><div></div></div>
+                            </button>
+                    </form>
+                    <button id="sign-up" class="btn-signup">
+                        <span>Sign up</span>
+                    </button>
+                </div>
+                <div id="register" class="register-container">
+                    <form>
+                        <input type="text" placeholder="First Name *" required>
+                        <input type="text" placeholder="Last Name *" required>
+                        <input type="date" placeholder="Date of Birth *" required>
+                        <input type="text" placeholder="E-Mail *" required>
+                        <input type="text" placeholder="Username *" required>
+                        <input type="password" placeholder="Password *" required>
+                    </form>
+                    <button id="submit-signup" class="btn-submit-signup">
+                        <div class="submit-signup-span">Submit</div>
+                        <div class="lds-ripple"><div></div><div></div></div>
+                    </button>
+                    <div id="redirect" class="login-redirect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="store-content">
+            <div class="content" id="content">
+                <div class="search-field-container">
+                    <input class="search-input"></input>
+                </div>
+                <div class="search-button-container">
+                    <button id="search-button" class="search-button">Search</button>
+                </div>
+                <div class="list-container-container">
+                    <div id="table-div" class="list-container">
+                        <table id="product-list">
+                            <tr id="list-titles">
+                                <td>ID</td>
+                                <td>Name</td>
+                                <td>Category</td>
+                                <td>Price</td>
+                                <td>Production Year</td>
+                                <td>Color</td>
+                                <td>Condition</td>
+                                <td>Seller</td>
+                                <td>Cart</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="publish-popup-container">
+                <span>Enter Product Details</span>
+                <input type="text" placeholder="Name *" required>
+                <input type="text" list="categories" placeholder="Category *" required>
+        
+                <input type="text" placeholder="Price *" required>
+                <input type="number" placeholder="Production Year" min="1900" max="2099" step="1"/>
+                <input type="text" placeholder="Color *" required>
+                <input type="text" list="conditions" placeholder="Condition *" required>
+                <datalist id="categories">
+                        <option value="Stuff1"></option>
+                        <option value="Stuff2"></option>
+                        <option value="Stuff3"></option>
+                        <option value="Stuff4"></option>
+                        <option value="Stuff5"></option>
+                        <option value="Stuff6"></option>
+                        <option value="Stuff7"></option>
+                        <option value="Stuff8"></option>
+                    </datalist>
+                </datalist>
+                <datalist id="conditions">
+                    <option value="New"></option>
+                    <option value="Very good"></option>
+                    <option value="Good"></option>
+                    <option value="Not Working Properly"></option>
+                </datalist>
+                <div class="publish-button-container">
+                    <button id="submit-publish-btn" class="publish-product-button">Submit</button>
+                    <button id="close-publish-popup-btn" class="close-publish-container-button">Close</button>
+                </div>
+            </div>
+            <div id="cart-popup-container">
+                <span>Your Cart</span>
+                <div id="cart-container">
+                    <table id="cart-table">
+                        <tr class="cart-titles">
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Remove</td>
+                        </tr> 
+                        
+                    </table>
+                </div>
+                <div class="cart-button-container">
+                    <button id="checkout-btn">Check-Out</button>
+                    <button id="close-cart-btn">Close</button>
+                </div>
+            </div>        
+        </div>
+        <div id="profile-content" >
+            <div id="content" class="content">
+                <div id="notification-container" class="tab">
+                    <span class="title">Notifications</span>
+                    <div class="content-container">
+    
+                    </div>
+                </div>
+                <div id="order-history-container" class="tab">
+                    <span class="title">Order History</span>
+                    <div class="content-container">
+                        
+                    </div>
+                    <div class="order-history-filter-container">
+                        <div class="from-to-container">
+                            <span>From</span>
+                            <input type="date" placeholder="From">
+                            <span>To</span>
+                            <input type="date">
+                        </div>                
+                    </div>
+                    <button id="filter-order-history-btn" class="hover-button">Filter</button>
+                </div>
+                <div id="user-info-container" class="tab">
+                    <span class="title">Your Info</span>
+                    <div class="content-container">
+    
+                    </div>
+                    <button id="save-client-info-btn" class="hover-button">Save</button>
+                </div>
+            </div>
+    
+            <div id="cart-popup-container">
+                <span>Your Cart</span>
+                <div id="cart-container">
+                    <ul>
+                        <li>"Vem kan vispa förutan visp" - Samlade utgåvor av Vispcent Visplund</li>
+                        <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
+                        <li>Förbrukade Konsertbiljetter</li>
+                        <li>"Samlade Harklingar" av Christian Edvaldi</li>
+                        <li>Kned, alt spork</li>
+                    </ul>
+                </div>
+                <div class="cart-button-container">
+                    <button id="checkout-btn">Check-Out</button>
+                    <button id="close-cart-btn">Close</button>
+                </div>
+            </div>
+    
+            <div id="orders-to-confirm" class="overhead">
+    
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <ul id="credits">
+            <a>Anna</a>
+            <a>Anthon</a>
+            <a>Christian</a>
+            <a>Luke</a>
+            <a>Vincent</a>            
+        </ul>
+    </footer>
+</body>
+</html>

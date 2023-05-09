@@ -1,0 +1,227 @@
+.publish-button {
+  border: none;
+  border-radius: 5px;
+  background-color: #59a56b;
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-field-container {
+    display: flex;
+    position: relative;
+    margin-top: 2rem;
+}
+
+.search-input {
+    font-size: 30px;
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 10px;
+    border: 2px;
+    border-radius: 20px;
+    width: calc(50% - 70px);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button-container {
+    display: flex;
+    position: relative;
+}
+
+.search-button {
+    position: relative;
+    margin: auto;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a7a7a7;
+    color: #fff;
+    width: calc(20% - 50px);
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.25s, box-shadow 0.3s, color 0.3s;
+}
+
+.search-button:hover, .publish-button:hover, .publish-product-button:hover, #checkout-btn:hover {
+    color: black;
+    background-color: #35e35d;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+.close-publish-container-button:hover, #close-cart-btn:hover {
+    color: black;
+    background-color: rgb(216, 41, 41);
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+.list-container-container {
+    display: block;
+    margin-top: 2rem;
+    position: relative;
+    flex: 1;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+#product-list, #product-list td {
+    padding-left: 40px;
+    height: 40px;
+}
+
+#cart-table, #cart-table td {
+    padding-left: 40px;
+    height: 40px;
+}
+
+.cart-binary-btn {
+    font-size: 15px;
+}
+
+
+
+
+
+
+
+#publish-popup-container, #cart-popup-container {
+    display: none;
+    font-family: 'Quicksand', sans-serif;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    padding: 10px 10px;
+    border: 2px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    opacity: 0;
+}
+
+
+#publish-popup-container.show, #cart-popup-container.show {
+    display: flex;
+    opacity: 1;
+}
+
+#publish-popup-container span, #cart-popup-container span {
+    align-self: center;
+    user-select: none;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#publish-popup-container input {
+    font-family: 'Quicksand', sans-serif;
+    margin: 5px auto;
+    padding: 10px 10px;
+    border: 2px;
+    border-radius: 5px;
+    width: calc(100% - 70px);
+    font-size: 16px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+
+.publish-button-container {
+    margin-top: 15px;
+    display: block;
+}
+
+.cart-button-container {
+    margin-top: 8px;
+    display: block;
+}
+
+.publish-product-button, #checkout-btn {
+    margin-top: 10px;
+    margin-left: 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #59a56b;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    width: calc(50% - 70px);
+    align-self:flex-start;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+.close-publish-container-button, #close-cart-btn {
+    margin-top: 10px;
+    margin-left: 85px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a7a7a7;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    width: calc(50% - 70px);
+    align-self:flex-end;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
+}
+
+
+
+
+/*
+Keyframes
+*/
+
+
+@keyframes changeFill {
+    from {
+        fill: white;
+    }
+    to {
+        fill: #b8f4ff;
+    }
+}
+
+@keyframes changeSVGFill {
+    from {
+        fill: none;
+    }
+    to {
+        fill: black;
+    }
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }    
+}
