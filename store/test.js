@@ -1,6 +1,25 @@
-var connection = new WebSocket('ws://127.0.0.1:1234');
+//var connection = new WebSocket('ws://127.0.0.1:1234');
+import { getSocket, addMessageListener } from "./websocket";
 const cart = [];
+var connection = getSocket()
 
+addMessageListener(function(evt) {
+    data = JSON.parse(evt.data);
+    payload = data.payload;
+    if (data.type === 'login') {
+        handleLogin(payload.success);
+    } else if (data.type === 'signup') {
+        handleSignup(payload)
+    } else if (data.type === 'randomProducts' || data.type === 'search') {
+        updateProductTable(payload);
+    } else if (data.type === 'notification') {
+
+    } else if (data.type === 'pending_orders') {
+
+    } else if (data.type === 'order_history') {
+        
+    }
+})
 connection.onopen = function() {
     /*
     data = {}
@@ -16,7 +35,7 @@ connection.onopen = function() {
     console.log('connected')
     connection.send(JSON.stringify(data))*/
 }
-
+/*
 connection.onmessage = function(evt) {
     data = JSON.parse(evt.data);
     payload = data.payload;
@@ -24,10 +43,17 @@ connection.onmessage = function(evt) {
         handleLogin(payload.success);
     } else if (data.type === 'signup') {
         handleSignup(payload)
-    } else if (data.type === 'randomProducts') {
+    } else if (data.type === 'randomProducts' || data.type === 'search') {
         updateProductTable(payload);
+    } else if (data.type === 'notification') {
+
+    } else if (data.type === 'pending_orders') {
+
+    } else if (data.type === 'order_history') {
+        
     }
 }
+*/
 
 function updateProductTable(payload) {
     let tableContainer = document.getElementById("table-div");
