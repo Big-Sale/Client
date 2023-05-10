@@ -1,6 +1,6 @@
 const connection = new WebSocket('ws://127.0.0.1:8080')
 const cart = []
-var userid
+var userId = 1
 var username
 
 const store = document.getElementById('store-content')
@@ -152,23 +152,28 @@ function changeToStore() {
 }
 
 //handle message group
-connection.onmessage = function(evt) {
-    let data = JSON.parse(evt.data)
-    console.log(data)
-    let payload = data.payload
-    if (data.type === 'login') {
-        handleLogin(payload.success)
-    } else if (data.type === 'signup') {
-        handleSignup(payload.success)
-    } else if (data.type === 'randomProducts' || data.type === 'search') {
-        updateProductTable(payload)
-    } else if (data.type === 'notification') {
 
-    } else if (data.type === 'pending_orders') {
 
-    } else if (data.type === 'orderHistoryRequest') {
-        updateOrderHistory(payload)
-    }
+function removeFromCart(productId) {
+    let tr = document.getElementById("cart-row" + productId)
+    tr.remove()
+    let index = cart.indexOf(productId)
+    cart.splice(index, 1)
+    console.log(cart)
+}
+
+function addToCart(productId, name, price) {
+    if(cart.includes(productId)) return
+    cart.push(productId)
+    
+    let template = 
+                `<tr class="cart-row" id="cart-row${productId}">
+                    <td>${productId}</td>
+                    <td>${name}</td>
+                    <td>${price}</td>
+                    <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
+                </tr>`
+    let cartTable = document.getElementById("cart-table").innerHTML += template
 }
 
 function updateProductTable(payload) {
@@ -211,27 +216,8 @@ function updateProductTable(payload) {
         }
 }
 
-function addToCart(productId, name, price) {
-    if(cart.includes(productId)) return
-    cart.push(productId)
-    
-    let template = 
-                `<tr class="cart-row" id="cart-row${productId}">
-                    <td>${productId}</td>
-                    <td>${name}</td>
-                    <td>${price}</td>
-                    <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
-                </tr>`
-    let cartTable = document.getElementById("cart-table").innerHTML += template
-}
 
-function removeFromCart(productId) {
-    let tr = document.getElementById("cart-row" + productId)
-    tr.remove()
-    let index = cart.indexOf(productId)
-    cart.splice(index, 1)
-    console.log(cart)
-}
+
 
 function handleLogin(success) {
     if (success) {
@@ -279,7 +265,9 @@ function handlePublishProduct(data) {
 filterBtn.addEventListener('click', function() {
     let filterDate = document.getElementById('filter-date')
     let data = {}
-    let payload = filterDate.value
+    let payload = {}
+    payload.userId = userId
+    payload.date = filterDate.value
     data.type = 'OrderHistoryRequest'
     data.payload = payload 
     connection.send(JSON.stringify(data))    
@@ -292,7 +280,8 @@ function updateOrderHistory(payload) {
     }
     payload.forEach(element => {
         let id = document.createElement('h4')
-        id.textContent = element.productType
+        console.log(element.productId)
+        id.textContent = element.productId
         searchedOrders.appendChild(id)
     })
     
@@ -360,7 +349,7 @@ submitRegisterButton.addEventListener('click', () => {
         payload.username = document.getElementById('username').value
         payload.pw = document.getElementById('password').value
         data.payload = payload
-        username = payload.username
+        username = document.getElementById('username').value
         connection.send(JSON.stringify(data))
     }
 })
@@ -426,4 +415,24 @@ function showLoading(button) {
     setTimeout(() => {
         button.classList.remove('loading');
     }, 3000);
+}
+
+
+connection.onmessage = function(evt) {
+    let data = JSON.parse(evt.data)
+    console.log(data)
+    let payload = data.payload
+    if (data.type === 'login') {
+        handleLogin(payload.success)
+    } else if (data.type === 'signup') {
+        handleSignup(payload.success)
+    } else if (data.type === 'randomProducts' || data.type === 'search') {
+        updateProductTable(payload)
+    } else if (data.type === 'notification') {
+
+    } else if (data.type === 'pending_orders') {
+
+    } else if (data.type === 'order_history_request') {
+        updateOrderHistory(payload)
+    }
 }
