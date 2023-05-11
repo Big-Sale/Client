@@ -40,64 +40,87 @@ const loginRedirect = document.getElementById('redirect')
 
 //store group
 closePublishPopUpButton.addEventListener("click", function() {
-    publishPopUp.classList.remove("show");
-    header.classList.remove("blur");
-    content.classList.remove("blur");
-    footer.classList.remove("blur");
+    publishPopUp.classList.remove("show")
+    header.classList.remove("blur")
+    content.classList.remove("blur")
+    footer.classList.remove("blur")
 })
 
-submitPublishButton.addEventListener("click", function() {
-    if(infoValidated()) {
-        publishPopUp.classList.remove("show");
-        header.classList.remove("blur");
-        content.classList.remove("blur");
-        footer.classList.remove("blur");
-        data = {}
-        payload = {}
-        data.type = 'addProduct'
-        payload.productType = document.getElementById('product-category')
-        payload.price = document.getElementById('product-price')
-        payload.date = document.getElementById('product-year')
-        payload.colour = document.getElementById('product-colour')
-        payload.condition = document.getElementById('product-condition')
-        payload.productName = document.getElementById('product-name')
-        payload.userId = userid
-        data.payload = payload
-
-        connection.send(JSON.stringify(data))
+searchButton.addEventListener('click', () => {
+    const data = {
+      type: 'search',
+      payload: {
+        minPrice: document.getElementById('price-from').value || undefined,
+        maxPrice: document.getElementById('price-to').value || undefined,
+        productType: document.getElementById('search-input').value || undefined,
+        condition: document.getElementById('condition-dropdown').value || undefined,
+      },
     }
-})
-
-cartButton.addEventListener("click", function() {
-    cartPopUp.classList.add("show");
-    header.classList.add("blur");
-    content.classList.add("blur");
-    footer.classList.add("blur");
-})
-
-checkoutButton.addEventListener("click", function() {
-    cartPopUp.classList.remove("show");
-    header.classList.remove("blur");
-    content.classList.remove("blur");
-    footer.classList.remove("blur");
-    let data = {}
-    data.type = 'buyProduct'
-    data.payload = cart
-    data.user = userId
     connection.send(JSON.stringify(data))
-    cart = []
-    const table = document.querySelector('#cart-table');
-    const rows = table.querySelectorAll('tr');
-    for (let i = 1; i < rows.length; i++) {
-        table.removeChild(rows[i]);
+  })
+  
+
+  submitPublishButton.addEventListener("click", () => {
+    if (infoValidated()) {
+      publishPopUp.classList.remove("show")
+      header.classList.remove("blur")
+      content.classList.remove("blur")
+      footer.classList.remove("blur")
+      
+      const data = {
+        type: 'addProduct',
+        payload: {
+          productType: document.getElementById('product-category').value,
+          price: document.getElementById('product-price').value,
+          date: document.getElementById('product-year').value,
+          colour: document.getElementById('product-colour').value,
+          condition: document.getElementById('product-condition').value,
+          productName: document.getElementById('product-name').value,
+          userId: userid,
+        },
+      }
+  
+      connection.send(JSON.stringify(data))
     }
+  })
+  
+
+cartButton.addEventListener("click", () => {
+    cartPopUp.classList.add("show")
+    header.classList.add("blur")
+    content.classList.add("blur")
+    footer.classList.add("blur")
 })
 
-closeCartButton.addEventListener("click", function() {
-    cartPopUp.classList.remove("show");
-    header.classList.remove("blur");
-    content.classList.remove("blur");
-    footer.classList.remove("blur");
+checkoutButton.addEventListener("click", () => {
+    cartPopUp.classList.remove("show")
+    header.classList.remove("blur")
+    content.classList.remove("blur")
+    footer.classList.remove("blur")
+    
+    const data = {
+      type: 'buyProduct',
+      payload: cart,
+      user: userId,
+    }
+    
+    connection.send(JSON.stringify(data))
+    
+    cart = []
+    
+    const table = document.querySelector('#cart-table')
+    const rows = table.querySelectorAll('tr')
+    
+    for (let i = 1; i < rows.length; i++) {
+      table.removeChild(rows[i])
+    }
+  })
+
+closeCartButton.addEventListener("click", () => {
+    cartPopUp.classList.remove("show")
+    header.classList.remove("blur")
+    content.classList.remove("blur")
+    footer.classList.remove("blur")
 })
 
 
@@ -107,7 +130,7 @@ closeCartButton.addEventListener("click", function() {
  */
 
 function infoValidated() {
-    return true;
+    return true
 }
 
 
@@ -121,8 +144,9 @@ function changeToProfile() {
     if (publish) {
         logo.removeChild(publish)
     }
-    let data = {}
-    data.type = 'notifications'
+    const data = {
+        type: 'notifications'
+    }
     connection.send(JSON.stringify(data))
 }
 
@@ -154,7 +178,7 @@ function addToCart(productId, name, price) {
         if(cart.includes(productId)) return
         cart.push(productId)
         let cartTable = document.getElementById('cart-table')
-        let tr = document.createElement('tr');
+        let tr = document.createElement('tr')
         tr.classList.add('cart-row')
         let id = 'cart-row' + productId
         tr.setAttribute('id', id)
@@ -234,7 +258,7 @@ function updateProductTable(payload) {
             td.appendChild(button)
             tr.appendChild(td)
             table.appendChild(tr)
-        });
+        })
     }
 }
 
@@ -287,9 +311,9 @@ function handlePublishProduct(data) {
 
 function handleNotification(data) {
     const table = element.getElementById('notifications-table')
-    const rows = table.querySelectorAll('tr');
+    const rows = table.querySelectorAll('tr')
     for (let i = 1; i < rows.length; i++) {
-        table.removeChild(rows[i]);
+        table.removeChild(rows[i])
     }
     data.forEach(element => {
         let tr = document.getElementById('tr')
@@ -315,12 +339,13 @@ function createNotificationsTd(textContent, tr) {
 filterBtn.addEventListener('click', function() {
     let filterDate = document.getElementById('filter-date')
     if (filterDate.value.length === 0) return
-    let data = {}
-    let payload = {}
-    payload.userId = userId
-    payload.date = filterDate.value
-    data.type = 'OrderHistoryRequest'
-    data.payload = payload 
+    const data = {
+        type: 'OrderHistoryRequest',
+        payload: {
+            userId: userId, 
+            date: filterDate.value
+        }
+    }
     connection.send(JSON.stringify(data))    
 })
 
@@ -347,9 +372,9 @@ function updateOrderHistory(payload) {
 //auth group
 
 loginRedirect.addEventListener('click', () => {
-    container.classList.remove("expanded");
-    loginContainer.classList.remove("removed");
-    registerContainer.classList.remove("visible");
+    container.classList.remove("expanded")
+    loginContainer.classList.remove("removed")
+    registerContainer.classList.remove("visible")
 })
 
 /**
@@ -358,10 +383,10 @@ loginRedirect.addEventListener('click', () => {
  * corresponding elements.
  */
 registerButton.addEventListener('click', () => {
-    container.classList.add("expanded");
-    loginContainer.classList.add("removed");
-    registerContainer.classList.add("visible");
-});
+    container.classList.add("expanded")
+    loginContainer.classList.add("removed")
+    registerContainer.classList.add("visible")
+})
 
 /**
  * When login is pressed, input is validated and the load-icon
@@ -372,33 +397,19 @@ registerButton.addEventListener('click', () => {
  * as a form, that's why theres no actual button corresponding to
  * this function.
 */
-/*
-form.addEventListener('submit', function(e) {
-    
-    if(!checkUsername() || !checkPassword()) {
-        return;
-    }
-    e.preventDefault();
-    
-    showLoading(loginButton);
-    setTimeout(() => {
-
-        form.submit();
-    }, 3000)
-});
-*/
 
 loginButton.addEventListener('click', () => {
     if(!checkUsername() || !checkPassword()) {
-        return;
+        return
     }
     showLoading(loginButton)
-    let data = {}
-    data.type = 'login'
-    let payload = {}
-    payload.username = usernameField.value
-    payload.pw = passwordField.value 
-    data.payload = payload
+    const data = {
+        type: 'login',
+        payload: {
+            username: usernameField.value,
+            pw: passwordField.value
+        }
+    }
     connection.send(JSON.stringify(data))
 })
 
@@ -409,17 +420,18 @@ loginButton.addEventListener('click', () => {
 
 submitRegisterButton.addEventListener('click', () => {
     if(validUserDetails()) {
-        showLoading(submitRegisterButton);
-        let data = {}
-        data.type = 'signup'
-        let payload = {}
-        payload.firstName = document.getElementById('first-name').value
-        payload.lastName = document.getElementById('last-name').value
-        payload.dateOfBirth = document.getElementById('date-of-birth').value
-        payload.email = document.getElementById('e-mail').value
-        payload.username = document.getElementById('username').value
-        payload.pw = document.getElementById('password').value
-        data.payload = payload
+        showLoading(submitRegisterButton)
+        const data = {
+            type: 'signup',
+            payload: {
+                firstName: document.getElementById('first-name').value,
+                lastName: document.getElementById('last-name').value,
+                dateOfBirth: document.getElementById('date-of-birth').value,
+                email: document.getElementById('e-mail').value,
+                username: document.getElementById('username').value,
+                pw: document.getElementById('password').value
+            }
+        }
         username = document.getElementById('username').value
         connection.send(JSON.stringify(data))
     }
@@ -440,7 +452,7 @@ submitRegisterButton.addEventListener('click', () => {
 
 function validUserDetails() {
     // TODO
-    return true;
+    return true
 }
 
 /**
@@ -451,10 +463,10 @@ function validUserDetails() {
 
 function checkUsername() {
     if (usernameField.value.length < 5) {
-        usernameField.insertAdjacentHTML('afterend', '<div class="error">Username must be at least 5 characters long</div>');
-        return false;
+        usernameField.insertAdjacentHTML('afterend', '<div class="error">Username must be at least 5 characters long</div>')
+        return false
       }
-      return true;
+      return true
 }
 
 
@@ -466,10 +478,10 @@ function checkUsername() {
 
 function checkPassword() {
     if (passwordField.value === '') {
-        passwordField.insertAdjacentHTML('afterend', '<div class="error">Password cannot be empty</div>');
-        return false;
+        passwordField.insertAdjacentHTML('afterend', '<div class="error">Password cannot be empty</div>')
+        return false
       }
-      return true;
+      return true
 }
 
 /**
@@ -482,28 +494,40 @@ function checkPassword() {
  */
 
 function showLoading(button) {
-    button.classList.add('loading');
+    button.classList.add('loading')
     setTimeout(() => {
-        button.classList.remove('loading');
-    }, 3000);
+        button.classList.remove('loading')
+    }, 3000)
 }
 
 
 connection.onmessage = function(evt) {
-    let data = JSON.parse(evt.data)
+    const data = JSON.parse(evt.data)
     console.log(data)
-    let payload = data.payload
-    if (data.type === 'login') {
+    const payload = data.payload
+    
+    switch (data.type) {
+      case 'login':
         handleLogin(payload.id)
-    } else if (data.type === 'signup') {
+        break
+      case 'signup':
         handleSignup(payload.id)
-    } else if (data.type === 'randomProducts' || data.type === 'search') {
+        break
+      case 'randomProducts':
+      case 'search':
         updateProductTable(payload)
-    } else if (data.type === 'notification') {
+        break
+      case 'notification':
         handleNotification(payload)
-    } else if (data.type === 'pending_orders') {
-
-    } else if (data.type === 'order_history_request') {
+        break
+      case 'pending_orders':
+        // handle pending orders here
+        break
+      case 'order_history_request':
         updateOrderHistory(payload)
+        break
+      default:
+        console.log(`Unknown data type: ${data.type}`)
     }
-}
+  }
+  
