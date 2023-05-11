@@ -1,5 +1,5 @@
 const connection = new WebSocket('ws://127.0.0.1:8080')
-const cart = []
+var cart = []
 var userId = 1
 var username
 
@@ -89,11 +89,22 @@ cartButton.addEventListener("click", function() {
 })
 
 checkoutButton.addEventListener("click", function() {
-
     cartPopUp.classList.remove("show");
     header.classList.remove("blur");
     content.classList.remove("blur");
     footer.classList.remove("blur");
+    let data = {}
+    data.type = 'buyProduct'
+    data.payload = cart
+    data.user = userId
+    connection.send(JSON.stringify(data))
+    cart = []
+    const table = document.querySelector('#cart-table');
+    const rows = table.querySelectorAll('tr');
+
+    for (let i = 1; i < rows.length; i++) {
+        table.removeChild(rows[i]);
+    }
 })
 
 closeCartButton.addEventListener("click", function() {
@@ -153,71 +164,120 @@ function changeToStore() {
 
 //handle message group
 
-
-function removeFromCart(productId) {
-    let tr = document.getElementById("cart-row" + productId)
-    tr.remove()
-    let index = cart.indexOf(productId)
-    cart.splice(index, 1)
-    console.log(cart)
+function addToCart(productId, name, price) {
+    return function() {     
+        if(cart.includes(productId)) return
+        cart.push(productId)
+        let cartTable = document.getElementById('cart-table')
+        let tr = document.createElement('tr');
+        tr.classList.add('cart-row')
+        let id = 'cart-row' + productId
+        tr.setAttribute('id', id)
+        cartTr(productId, tr)
+        cartTr(name, tr)
+        cartTr(price, tr)
+        let td = document.createElement('td')
+        let button = document.createElement('button')
+        button.classList.add('cart-binary-btn')
+        button.textContent = '-'
+        button.addEventListener('click', () => {
+            let tr = document.getElementById("cart-row" + productId)
+            tr.remove()
+            let index = cart.indexOf(productId)
+            cart.splice(index, 1)
+        })
+        td.appendChild(button)
+        tr.appendChild(td)
+        cartTable.appendChild(tr)
+        let template = 
+                    `<tr class="cart-row" id="cart-row${productId}">
+                        <td>${productId}</td>
+                        <td>${name}</td>
+                        <td>${price}</td>
+                        <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
+                    </tr>`
+        //let cartTable = document.getElementById("cart-table").innerHTML += template
+    }
 }
 
-function addToCart(productId, name, price) {
-    if(cart.includes(productId)) return
-    cart.push(productId)
-    
-    let template = 
-                `<tr class="cart-row" id="cart-row${productId}">
-                    <td>${productId}</td>
-                    <td>${name}</td>
-                    <td>${price}</td>
-                    <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
-                </tr>`
-    let cartTable = document.getElementById("cart-table").innerHTML += template
+function cartTr(textContent, tr) {
+    let td = document.createElement('td')
+    td.textContent = textContent
+    tr.appendChild(td)
 }
 
 function updateProductTable(payload) {
     let tableContainer = document.getElementById("table-div")
-        if(payload.length === 0) {
-            let error = "<h1>No items found</h1>"
-            tableContainer.innerHTML = error
-        } else {
-            tableContainer.innerHTML = `<table id="product-list"></table>`
-            let productContainer = document.getElementById("product-list")
-            productContainer.innerHTML = 
-                                        `
-                                        <tr id="list-titles">
-                                            <td>ID</td>
-                                            <td>Name</td>
-                                            <td>Category</td>
-                                            <td>Price</td>
-                                            <td>Production Year</td>
-                                            <td>Color</td>
-                                            <td>Condition</td>
-                                            <td>Seller</td>
-                                            <td>Cart</td>
-                                        </tr>`;
-    
-            payload.forEach(element => {
-                let productTemplate = 
-                                `<tr class="product-row">
-                                    <td class="product-column">${element.productId}</td>
-                                    <td class="product-column">${element.productName}</td>
-                                    <td class="product-column">${element.productType}</td>
-                                    <td class="product-column">${element.price}</td>
-                                    <td class="product-column">${element.yearOfProduction}</td>
-                                    <td class="product-column">${element.colour}</td>
-                                    <td class="product-column">${element.condition}</td>
-                                    <td class="product-column">${element.seller}</td>
-                                    <td class="product-column"><button class="cart-binary-btn" onclick="addToCart(${element.productId}, '${element.productName}', ${element.price})">+</button></td>
-                                </tr>`
-                productContainer.innerHTML += productTemplate
-            });
-        }
+    let oldTable = document.getElementById('product-list')
+    let oldError = document.getElementById('error')
+    if (oldTable) {
+        tableContainer.removeChild(oldTable)
+    }
+    if (oldError) {
+        tableContainer.removeChild(oldError)
+    }
+    if(payload.length === 0) {
+        let error = document.createElement('h1')
+        error.textContent = 'No items found'
+        error.setAttribute('id', 'error')
+        tableContainer.appendChild(error)
+        
+        // let error = "<h1>No items found</h1>"
+        //tableContainer.innerHTML = error
+    } else {
+        let table = document.createElement('table')
+        table.setAttribute('id', 'product-list')
+        tableContainer.appendChild(table)
+        // tableContainer.innerHTML = `<table id="product-list"></table>`
+        //let productContainer = document.getElementById("product-list")
+        let listTiles = document.createElement('tr')
+        listTiles.classList.add('list-titles')
+        createTdForListTitle('ID', listTiles)
+        createTdForListTitle('Name', listTiles)
+        createTdForListTitle('Category', listTiles)
+        createTdForListTitle('Price', listTiles)
+        createTdForListTitle('Production', listTiles)
+        createTdForListTitle('Colour', listTiles)
+        createTdForListTitle('Condition', listTiles)
+        createTdForListTitle('Seller', listTiles)
+        createTdForListTitle('Cart', listTiles)
+        table.appendChild(listTiles)
+        payload.forEach(element => {
+            let tr = document.createElement('tr')
+            tr.classList.add('product-row')
+            createTdForProductRow(element.productId, tr)
+            createTdForProductRow(element.productName, tr)
+            createTdForProductRow(element.productType, tr)
+            createTdForProductRow(element.price, tr)
+            createTdForProductRow(element.yearOfProduction, tr)
+            createTdForProductRow(element.colour, tr)
+            createTdForProductRow(element.condition, tr)
+            createTdForProductRow(element.seller, tr)
+            let td = document.createElement('td')
+            td.classList.add('product-column')
+            let button = document.createElement('button')
+            button.classList.add('cart-binary-btn')
+            button.textContent = '+'
+            button.addEventListener('click', addToCart(element.productId, element.productName, element.price))
+            td.appendChild(button)
+            tr.appendChild(td)
+            table.appendChild(tr)
+        });
+    }
 }
 
+function createTdForListTitle(text, listTiles) {
+    let element = document.createElement('td')
+    element.textContent = text
+    listTiles.appendChild(element)
+}
 
-
+function createTdForProductRow(text, tr) {
+    let element = document.createElement('td')
+    element.classList.add('product-column')
+    element.textContent = text
+    tr.appendChild(element)
+}
 
 function handleLogin(success) {
     if (success) {
@@ -230,7 +290,6 @@ function handleLogin(success) {
     }
 }
 
-
 function handleSignup(success) {
     if (success) {
         changeToStore()
@@ -242,22 +301,36 @@ function handleSignup(success) {
     }
 }
 
-
-function handleSearch(data) {
-    if (data) {
-       // connection.send('hej')
-                //show success and/or login user
-    } else {
-        //show error
-    }
-}
-
 function handlePublishProduct(data) {
     if(success) {
 
     } else {
 
     }
+}
+
+function handleNotification(data) {
+    const table = element.getElementById('notifications-table')
+    const rows = table.querySelectorAll('tr');
+    for (let i = 1; i < rows.length; i++) {
+        table.removeChild(rows[i]);
+    }
+    data.forEach(element => {
+        let tr = document.getElementById('tr')
+        createNotificationsTd(element.productId, tr)
+        createNotificationsTd(element.productName, tr)
+        createNotificationsTd(element.price, tr)
+        let td = document.getElementById('td')
+        let button = document.getElementById('button')
+        //todo finish this in the same way as search
+    })
+}
+
+function createNotificationsTd(textContent, tr) {
+    let tr = document.createElement('td')
+    td.textContent = textContent
+    //add classlist
+    tr.appendChild(tr)
 }
 
 //profile group 
@@ -429,7 +502,7 @@ connection.onmessage = function(evt) {
     } else if (data.type === 'randomProducts' || data.type === 'search') {
         updateProductTable(payload)
     } else if (data.type === 'notification') {
-
+        handleNotification(payload)
     } else if (data.type === 'pending_orders') {
 
     } else if (data.type === 'order_history_request') {
