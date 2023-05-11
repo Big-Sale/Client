@@ -1,6 +1,6 @@
 const connection = new WebSocket('ws://127.0.0.1:8080')
 var cart = []
-var userId = 1
+var userId
 var username
 
 const store = document.getElementById('store-content')
@@ -12,7 +12,6 @@ store.classList.add("hidden")
 
 const searchButton = document.getElementById("search-button")
 const profileLink = document.getElementById("profile-link")
-//const publishButton = document.getElementById("publish")
 const publishPopUp = document.getElementById("publish-popup-container")
 const closePublishPopUpButton = document.getElementById("close-publish-popup-btn")
 const submitPublishButton = document.getElementById("submit-publish-btn")
@@ -40,16 +39,6 @@ const loginButton = document.getElementById('login')
 const loginRedirect = document.getElementById('redirect')
 
 //store group
-/*
-publishButton.addEventListener("click", function() {
-    publishPopUp.classList.add("show");
-    header.classList.add("blur");
-    content.classList.add("blur");
-    footer.classList.add("blur");
-})
-*/
-
-
 closePublishPopUpButton.addEventListener("click", function() {
     publishPopUp.classList.remove("show");
     header.classList.remove("blur");
@@ -59,12 +48,10 @@ closePublishPopUpButton.addEventListener("click", function() {
 
 submitPublishButton.addEventListener("click", function() {
     if(infoValidated()) {
-
         publishPopUp.classList.remove("show");
         header.classList.remove("blur");
         content.classList.remove("blur");
         footer.classList.remove("blur");
-
         data = {}
         payload = {}
         data.type = 'addProduct'
@@ -101,7 +88,6 @@ checkoutButton.addEventListener("click", function() {
     cart = []
     const table = document.querySelector('#cart-table');
     const rows = table.querySelectorAll('tr');
-
     for (let i = 1; i < rows.length; i++) {
         table.removeChild(rows[i]);
     }
@@ -135,7 +121,6 @@ function changeToProfile() {
     if (publish) {
         logo.removeChild(publish)
     }
-
     let data = {}
     data.type = 'notifications'
     connection.send(JSON.stringify(data))
@@ -189,14 +174,6 @@ function addToCart(productId, name, price) {
         td.appendChild(button)
         tr.appendChild(td)
         cartTable.appendChild(tr)
-        let template = 
-                    `<tr class="cart-row" id="cart-row${productId}">
-                        <td>${productId}</td>
-                        <td>${name}</td>
-                        <td>${price}</td>
-                        <td><button class=cart-binary-btn onclick="removeFromCart(${productId})">-</td>
-                    </tr>`
-        //let cartTable = document.getElementById("cart-table").innerHTML += template
     }
 }
 
@@ -216,20 +193,15 @@ function updateProductTable(payload) {
     if (oldError) {
         tableContainer.removeChild(oldError)
     }
-    if(payload.length === 0) {
+    if (payload.length === 0) {
         let error = document.createElement('h1')
         error.textContent = 'No items found'
         error.setAttribute('id', 'error')
-        tableContainer.appendChild(error)
-        
-        // let error = "<h1>No items found</h1>"
-        //tableContainer.innerHTML = error
+        tableContainer.appendChild(error)        
     } else {
         let table = document.createElement('table')
         table.setAttribute('id', 'product-list')
         tableContainer.appendChild(table)
-        // tableContainer.innerHTML = `<table id="product-list"></table>`
-        //let productContainer = document.getElementById("product-list")
         let listTiles = document.createElement('tr')
         listTiles.classList.add('list-titles')
         createTdForListTitle('ID', listTiles)
@@ -279,19 +251,23 @@ function createTdForProductRow(text, tr) {
     tr.appendChild(element)
 }
 
-function handleLogin(success) {
-    if (success) {
+function handleLogin(id) {
+    console.log(id)
+    if (id !== -1) {
+        userId = id
         changeToStore()
         logoClick.addEventListener('click', changeToStore)
         profileLink.addEventListener('click', changeToProfile)
         document.getElementById('header-username').textContent = username
     } else {
+        console.log('denied')
         alert('Invalid login credentials')
     }
 }
 
-function handleSignup(success) {
-    if (success) {
+function handleSignup(id) {
+    if (id !== -1) {
+        userId = id
         changeToStore()
         logoClick.addEventListener('click', changeToStore)
         profileLink.addEventListener('click', changeToProfile)
@@ -323,20 +299,22 @@ function handleNotification(data) {
         let td = document.getElementById('td')
         let button = document.getElementById('button')
         //todo finish this in the same way as search
+        button.addEventListener('click', addToCart(productId, productName, price))
     })
 }
 
 function createNotificationsTd(textContent, tr) {
-    let tr = document.createElement('td')
+    let td = document.createElement('td')
     td.textContent = textContent
     //add classlist
-    tr.appendChild(tr)
+    tr.appendChild(td)
 }
 
 //profile group 
 
 filterBtn.addEventListener('click', function() {
     let filterDate = document.getElementById('filter-date')
+    if (filterDate.value.length === 0) return
     let data = {}
     let payload = {}
     payload.userId = userId
@@ -351,13 +329,18 @@ function updateOrderHistory(payload) {
     while (searchedOrders.firstChild) {
         searchedOrders.removeChild(searchedOrders.lastChild)
     }
-    payload.forEach(element => {
-        let id = document.createElement('h4')
-        console.log(element.productId)
-        id.textContent = element.productId
-        searchedOrders.appendChild(id)
-    })
-    
+    if (payload.length === 0) {
+        let empty = document.createElement('h4')
+        empty.textContent = 'Nothing to show'
+        searchedOrders.appendChild(empty)
+    } else {
+        payload.forEach(element => {
+            let id = document.createElement('h4')
+            console.log(element.productId)
+            id.textContent = element.productId
+            searchedOrders.appendChild(id)
+        })
+    }
 }
 
 
@@ -389,7 +372,7 @@ registerButton.addEventListener('click', () => {
  * as a form, that's why theres no actual button corresponding to
  * this function.
 */
-
+/*
 form.addEventListener('submit', function(e) {
     
     if(!checkUsername() || !checkPassword()) {
@@ -403,6 +386,21 @@ form.addEventListener('submit', function(e) {
         form.submit();
     }, 3000)
 });
+*/
+
+loginButton.addEventListener('click', () => {
+    if(!checkUsername() || !checkPassword()) {
+        return;
+    }
+    showLoading(loginButton)
+    let data = {}
+    data.type = 'login'
+    let payload = {}
+    payload.username = usernameField.value
+    payload.pw = passwordField.value 
+    data.payload = payload
+    connection.send(JSON.stringify(data))
+})
 
 /**
  * When the button for submitting user info is clicked, the load
@@ -496,9 +494,9 @@ connection.onmessage = function(evt) {
     console.log(data)
     let payload = data.payload
     if (data.type === 'login') {
-        handleLogin(payload.success)
+        handleLogin(payload.id)
     } else if (data.type === 'signup') {
-        handleSignup(payload.success)
+        handleSignup(payload.id)
     } else if (data.type === 'randomProducts' || data.type === 'search') {
         updateProductTable(payload)
     } else if (data.type === 'notification') {
