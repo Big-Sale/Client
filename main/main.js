@@ -310,7 +310,7 @@ function handlePublishProduct(data) {
 }
 
 function handleNotification(data) {
-    const table = element.getElementById('notifications-table')
+    const table = document.getElementById('notifications-table')
     const rows = table.querySelectorAll('tr')
     for (let i = 1; i < rows.length; i++) {
         table.removeChild(rows[i])
@@ -462,7 +462,7 @@ function validUserDetails() {
  */
 
 function checkUsername() {
-    if (usernameField.value.length < 5) {
+    if (usernameField.value.length < 3) {
         usernameField.insertAdjacentHTML('afterend', '<div class="error">Username must be at least 5 characters long</div>')
         return false
       }
@@ -517,7 +517,7 @@ connection.onmessage = function(evt) {
       case 'search':
         updateProductTable(payload)
         break
-      case 'notification':
+      case 'notifications':
         handleNotification(payload)
         break
       case 'pending_orders':
