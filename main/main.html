@@ -73,9 +73,17 @@
         <div id="store-content">
             <div class="content" id="content">
                 <div class="search-field-container">
-                    <input id="search-input" class="search-input"></input>
-                    <input id="price-from" placeholder="Price from"></input>
-                    <input id="price-to" placeholder="Price to"></input>
+                    <form class="search-input-container">
+                        <input id="search-input" class="search-input">
+                        <div id="search-button" class="search-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </div>
+                    </form>
+                    </input>
+                </div>
+                <div class="filter-container">                    
+                    <input id="price-from" placeholder="Price from" type="number"></input>
+                    <input id="price-to" placeholder="Price to" type="number"></input>
                     <select id="condition-dropdown">
                         <option value="">Select Condition</option>
                         <option value="new">New</option>
@@ -83,9 +91,6 @@
                         <option value="good">Good</option>
                         <option value="not working properly">Not working properly</option>
                     </select>
-                </div>
-                <div class="search-button-container">
-                    <button id="search-button" class="search-button">Search</button>
                 </div>
                 <div class="list-container-container">
                     <div id="table-div" class="list-container">
@@ -193,26 +198,25 @@
                 </div>
             </div>
     
-            <div id="cart-popup-container">
-                <span>Your Cart</span>
-                <div id="cart-container">
-                    <ul>
-                        <li>"Vem kan vispa förutan visp" - Samlade utgåvor av Vispcent Visplund</li>
-                        <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
-                        <li>Förbrukade Konsertbiljetter</li>
-                        <li>"Samlade Harklingar" av Christian Edvaldi</li>
-                        <li>Kned, alt spork</li>
-                    </ul>
-                </div>
-                <div class="cart-button-container">
-                    <button id="checkout-btn">Check-Out</button>
-                    <button id="close-cart-btn">Close</button>
-                </div>
-            </div>
-    
             <div id="orders-to-confirm" class="overhead">
-    
+                
             </div>
+        </div>
+    </div>
+    <div id="cart-popup-container">
+        <span>Your Cart</span>
+        <div id="cart-container">
+            <ul>
+                <li>"Vem kan vispa förutan visp" - Samlade utgåvor av Vispcent Visplund</li>
+                <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
+                <li>Förbrukade Konsertbiljetter</li>
+                <li>"Samlade Harklingar" av Christian Edvaldi</li>
+                <li>Kned, alt spork</li>
+            </ul>
+        </div>
+        <div class="cart-button-container">
+            <button id="checkout-btn">Check-Out</button>
+            <button id="close-cart-btn">Close</button>
         </div>
     </div>
     <footer id="footer">

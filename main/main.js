@@ -6,8 +6,9 @@ var username
 const store = document.getElementById('store-content')
 const profile = document.getElementById('profile-content')
 const login = document.getElementById('login-content')
+login.classList.add('hidden')
 profile.classList.add('hidden')
-store.classList.add("hidden")
+/*store.classList.add("hidden")*/
 
 
 const searchButton = document.getElementById("search-button")
@@ -88,6 +89,7 @@ searchButton.addEventListener('click', () => {
 cartButton.addEventListener("click", () => {
     cartPopUp.classList.add("show")
     header.classList.add("blur")
+    profile-content.classList.add("blur")
     content.classList.add("blur")
     footer.classList.add("blur")
 })
@@ -96,6 +98,7 @@ checkoutButton.addEventListener("click", () => {
     cartPopUp.classList.remove("show")
     header.classList.remove("blur")
     content.classList.remove("blur")
+    profile-content.classList.remove("blur")
     footer.classList.remove("blur")
     
     const data = {
@@ -119,6 +122,7 @@ checkoutButton.addEventListener("click", () => {
 closeCartButton.addEventListener("click", () => {
     cartPopUp.classList.remove("show")
     header.classList.remove("blur")
+    profile-content.classList.remove("blur")
     content.classList.remove("blur")
     footer.classList.remove("blur")
 })
