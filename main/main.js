@@ -50,8 +50,8 @@ searchButton.addEventListener('click', () => {
     const data = {
       type: 'search',
       payload: {
-        minPrice: document.getElementById('price-from').value || undefined,
-        maxPrice: document.getElementById('price-to').value || undefined,
+        minPrice: document.getElementById('price-from').value || -1,
+        maxPrice: document.getElementById('price-to').value || -1,
         productType: document.getElementById('search-input').value || undefined,
         condition: document.getElementById('condition-dropdown').value || undefined,
       },
