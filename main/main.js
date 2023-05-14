@@ -316,15 +316,19 @@ function handleNotification(data) {
         table.removeChild(rows[i])
     }
     data.forEach(element => {
-        let tr = document.getElementById('tr')
+        let tr = document.createElement('tr')
         createNotificationsTd(element.productId, tr)
         createNotificationsTd(element.productName, tr)
         createNotificationsTd(element.price, tr)
-        let td = document.getElementById('td')
-        let button = document.getElementById('button')
-        //todo finish this in the same way as search
-        button.addEventListener('click', addToCart(productId, productName, price))
+        let td = document.createElement('td')
+        let button = document.createElement('button')
+        button.textContent = '+'
+        button.addEventListener('click', addToCart(element.productId, element.productName, element.price))
+        td.appendChild(button)
+        tr.appendChild(td)
+        table.appendChild(tr)
     })
+    
 }
 
 function createNotificationsTd(textContent, tr) {
