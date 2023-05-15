@@ -79,7 +79,6 @@ submitPublishButton.addEventListener("click", () => {
                 productName: document.getElementById('product-name').value,
             },
         }
-        console.log('hello')
         connection.send(JSON.stringify(data))
     }
 })
@@ -288,6 +287,48 @@ function handleLogin(id) {
     } else {
         console.log('denied')
         alert('Invalid login credentials')
+    }
+}
+
+function handleSubscribe(product) {
+    if (profile.classList.contains('hidden')) {
+        console.log('YOU HAVE BEEN NOTIFIED')
+        //TODO bell notification
+    } else {
+        const table = document.getElementById('notifications-table')
+        let tr = document.createElement('tr')
+        const id = 'notification-id' + product.productId
+        tr.setAttribute('id', id)
+
+        createNotificationsTd(product.productId, tr)
+        createNotificationsTd(product.productName, tr)
+        createNotificationsTd(product.price, tr)
+
+        let cartTd = document.createElement('td')
+        let cartButton = document.createElement('button')
+        cartButton.textContent = '+'
+        cartButton.addEventListener('click', addToCart(product.productId, product.productName, product.price))
+
+        let removeTd = document.createElement('td')
+        let removeButton = document.createElement('button')
+        removeButton.textContent = '-'
+        removeButton.addEventListener('click', () => {
+            const data = {
+                type: 'removeNotification',
+                payload: product.productId
+            }
+            let tr = document.getElementById(id)
+            tr.remove()
+            let index = cart.indexOf(productId)
+            cart.splice(index, 1)
+            connection.send(JSON.stringify(data))
+        })
+        
+        cartTd.appendChild(cartButton)
+        removeTd.appendChild(removeButton)
+        tr.appendChild(cartTd)
+        tr.appendChild(removeTd)
+        table.appendChild(tr)
     }
 }
 
@@ -533,6 +574,8 @@ connection.onmessage = function(evt) {
       case 'order_history_request':
         updateOrderHistory(payload)
         break
+      case 'subscribed_product':
+        handleSubscribe(payload)
       default:
         console.log(`Unknown data type: ${data.type}`)
     }
