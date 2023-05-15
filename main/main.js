@@ -319,8 +319,6 @@ function handleSubscribe(product) {
             }
             let tr = document.getElementById(id)
             tr.remove()
-            let index = cart.indexOf(productId)
-            cart.splice(index, 1)
             connection.send(JSON.stringify(data))
         })
         
@@ -360,15 +358,34 @@ function handleNotification(data) {
     }
     data.forEach(element => {
         let tr = document.createElement('tr')
+        const id = 'notification-id' + element.productId
+        tr.setAttribute('id', id)
+
         createNotificationsTd(element.productId, tr)
         createNotificationsTd(element.productName, tr)
         createNotificationsTd(element.price, tr)
-        let td = document.createElement('td')
-        let button = document.createElement('button')
-        button.textContent = '+'
-        button.addEventListener('click', addToCart(element.productId, element.productName, element.price))
-        td.appendChild(button)
-        tr.appendChild(td)
+
+        let cartTd = document.createElement('td')
+        let cartButton = document.createElement('button')
+        cartButton.textContent = '+'
+        cartButton.addEventListener('click', addToCart(element.productId, element.productName, element.price))
+        cartTd.appendChild(cartButton)
+        tr.appendChild(cartTd)
+
+        let removeTd = document.createElement('td')
+        let removeButton = document.createElement('button')
+        removeButton.textContent = '-'
+        removeButton.addEventListener('click', () => {
+            const data = {
+                type: 'removeNotification',
+                payload: element.productId
+            }
+            let tr = document.getElementById(id)
+            tr.remove()
+            connection.send(JSON.stringify(data))
+        })
+        removeTd.appendChild(removeButton)
+        tr.appendChild(removeTd)
         table.appendChild(tr)
     })
     
