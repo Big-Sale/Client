@@ -59,6 +59,17 @@ searchButton.addEventListener('click', () => {
     }
     connection.send(JSON.stringify(data))
   })
+
+  function addNotification() {
+    const svg = document.querySelector('.user-nav > svg')
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle")
+    circle.setAttribute('id', 'notification-circle')
+    circle.setAttribute("cx", "20")
+    circle.setAttribute("cy", "2")
+    circle.setAttribute("r", "3")
+    circle.setAttribute("fill", "red")
+    svg.appendChild(circle)
+  }
   
 
 submitPublishButton.addEventListener("click", () => {
@@ -137,6 +148,10 @@ function infoValidated() {
 
 //change scene group
 function changeToProfile() {
+    let circle = document.getElementById('notification-circle')
+    if (circle) {
+        circle.remove()
+    }
     profile.classList.remove('hidden')
     store.classList.add('hidden')
     login.classList.add('hidden')
@@ -277,7 +292,6 @@ function createTdForProductRow(text, tr) {
 }
 
 function handleLogin(id) {
-    console.log(id)
     if (id !== -1) {
         userId = id
         changeToStore()
@@ -285,15 +299,13 @@ function handleLogin(id) {
         profileLink.addEventListener('click', changeToProfile)
         document.getElementById('header-username').textContent = username
     } else {
-        console.log('denied')
         alert('Invalid login credentials')
     }
 }
 
 function handleSubscribe(product) {
     if (profile.classList.contains('hidden')) {
-        console.log('YOU HAVE BEEN NOTIFIED')
-        //TODO bell notification
+        addNotification()
     } else {
         const table = document.getElementById('notifications-table')
         let tr = document.createElement('tr')
