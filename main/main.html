@@ -130,10 +130,10 @@
                     </datalist>
                 </datalist>
                 <datalist id="conditions">
-                    <option value="New"></option>
-                    <option value="Very good"></option>
-                    <option value="Good"></option>
-                    <option value="Not Working Properly"></option>
+                    <option value="new"></option>
+                    <option value="very good"></option>
+                    <option value="good"></option>
+                    <option value="not working properly"></option>
                 </datalist>
                 <div class="publish-button-container">
                     <button id="submit-publish-btn" class="publish-product-button">Submit</button>
@@ -199,7 +199,19 @@
             </div>
     
             <div id="orders-to-confirm" class="overhead">
-                
+                <span>Your Pending Orders</span>
+                <div id="orders-container">
+                    <table id="pending-orders-table">
+                        <tr class="pending-order-titles">
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Buyer</td>
+                            <td>Accept</td>
+                            <td>Decline</td>
+                        </tr> 
+                    </table>
+                </div>
             </div>
         </div>
     </div>

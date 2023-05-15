@@ -6,9 +6,9 @@ var username
 const store = document.getElementById('store-content')
 const profile = document.getElementById('profile-content')
 const login = document.getElementById('login-content')
-login.classList.add('hidden')
+//login.classList.add('hidden') for testing purposes
 profile.classList.add('hidden')
-/*store.classList.add("hidden")*/
+store.classList.add("hidden")
 
 
 const searchButton = document.getElementById("search-button")
@@ -61,29 +61,28 @@ searchButton.addEventListener('click', () => {
   })
   
 
-  submitPublishButton.addEventListener("click", () => {
+submitPublishButton.addEventListener("click", () => {
     if (infoValidated()) {
-      publishPopUp.classList.remove("show")
-      header.classList.remove("blur")
-      content.classList.remove("blur")
-      footer.classList.remove("blur")
+        publishPopUp.classList.remove("show")
+        header.classList.remove("blur")
+        content.classList.remove("blur")
+        footer.classList.remove("blur")
       
-      const data = {
-        type: 'addProduct',
-        payload: {
-          productType: document.getElementById('product-category').value,
-          price: document.getElementById('product-price').value,
-          date: document.getElementById('product-year').value,
-          colour: document.getElementById('product-colour').value,
-          condition: document.getElementById('product-condition').value,
-          productName: document.getElementById('product-name').value,
-          userId: userid,
-        },
-      }
-  
-      connection.send(JSON.stringify(data))
+        const data = {
+            type: 'addProduct',
+                payload: {
+                productType: document.getElementById('product-category').value,
+                price: document.getElementById('product-price').value,
+                date: document.getElementById('product-year').value,
+                colour: document.getElementById('product-colour').value,
+                condition: document.getElementById('product-condition').value,
+                productName: document.getElementById('product-name').value,
+            },
+        }
+        console.log('hello')
+        connection.send(JSON.stringify(data))
     }
-  })
+})
   
 
 cartButton.addEventListener("click", () => {
@@ -104,7 +103,6 @@ checkoutButton.addEventListener("click", () => {
     const data = {
       type: 'buyProduct',
       payload: cart,
-      user: userId,
     }
     
     connection.send(JSON.stringify(data))
@@ -418,6 +416,7 @@ loginButton.addEventListener('click', () => {
             pw: passwordField.value
         }
     }
+    username = usernameField.value
     connection.send(JSON.stringify(data))
 })
 
