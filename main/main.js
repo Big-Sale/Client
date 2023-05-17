@@ -291,16 +291,23 @@ function createTdForProductRow(text, tr) {
     tr.appendChild(element)
 }
 
-function handleLogin(id) {
-    if (id !== -1) {
-        userId = id
+function handleLogin(payload) {
+    if (payload.id !== -1) {
+        userId = payload.id
         changeToStore()
         logoClick.addEventListener('click', changeToStore)
         profileLink.addEventListener('click', changeToProfile)
         document.getElementById('header-username').textContent = username
+        if (payload.notify) {
+            addNotification()
+        }
     } else {
         alert('Invalid login credentials')
     }
+}
+
+function handlePendingOrders(product) {
+
 }
 
 function handleSubscribe(product) {
@@ -585,7 +592,7 @@ connection.onmessage = function(evt) {
     
     switch (data.type) {
       case 'login':
-        handleLogin(payload.id)
+        handleLogin(payload)
         break
       case 'signup':
         handleSignup(payload.id)
@@ -598,7 +605,7 @@ connection.onmessage = function(evt) {
         handleNotification(payload)
         break
       case 'pending_orders':
-        // handle pending orders here
+        handlePendingOrders(payload)
         break
       case 'order_history_request':
         updateOrderHistory(payload)
