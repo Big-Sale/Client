@@ -6,7 +6,7 @@ var username
 const store = document.getElementById('store-content')
 const profile = document.getElementById('profile-content')
 const login = document.getElementById('login-content')
-//login.classList.add('hidden') for testing purposes
+//login.classList.add('hidden')
 profile.classList.add('hidden')
 store.classList.add("hidden")
 
@@ -246,13 +246,13 @@ function updateProductTable(payload) {
         listTiles.classList.add('list-titles')
         createTdForListTitle('ID', listTiles)
         createTdForListTitle('Name', listTiles)
-        createTdForListTitle('Category', listTiles)
+        createTdForListTitle('Type', listTiles)
         createTdForListTitle('Price', listTiles)
         createTdForListTitle('Production', listTiles)
         createTdForListTitle('Colour', listTiles)
         createTdForListTitle('Condition', listTiles)
         createTdForListTitle('Seller', listTiles)
-        createTdForListTitle('Cart', listTiles)
+        createTdForListTitle('Add', listTiles)
         table.appendChild(listTiles)
         payload.forEach(element => {
             let tr = document.createElement('tr')
@@ -303,7 +303,7 @@ function handleLogin(id) {
     }
 }
 
-function handleSubscribe(product) {
+function handleSubscriptionNotification(product) {
     if (profile.classList.contains('hidden')) {
         addNotification()
     } else {
@@ -312,9 +312,9 @@ function handleSubscribe(product) {
         const id = 'notification-id' + product.productId
         tr.setAttribute('id', id)
 
-        createNotificationsTd(product.productId, tr)
-        createNotificationsTd(product.productName, tr)
-        createNotificationsTd(product.price, tr)
+        createRowElement(product.productId, tr)
+        createRowElement(product.productName, tr)
+        createRowElement(product.price, tr)
 
         let cartTd = document.createElement('td')
         let cartButton = document.createElement('button')
@@ -372,11 +372,8 @@ function handleNotification(data) {
         let tr = document.createElement('tr')
         const id = 'notification-id' + element.productId
         tr.setAttribute('id', id)
-
-        createNotificationsTd(element.productId, tr)
-        createNotificationsTd(element.productName, tr)
-        createNotificationsTd(element.price, tr)
-
+        createRowElement(element.productType, tr)
+        createRowElement(element.price, tr)
         let cartTd = document.createElement('td')
         let cartButton = document.createElement('button')
         cartButton.textContent = '+'
@@ -403,7 +400,54 @@ function handleNotification(data) {
     
 }
 
-function createNotificationsTd(textContent, tr) {
+function handlePendingOrders(orders) {
+    let table = document.getElementById('pending-order-table')
+    const rows = table.querySelectorAll('tr')
+    for (let i = 1; i < rows.length; i++) {
+        table.removeChild(rows[i])
+    }
+    orders.forEach(element => {
+        let tr = document.createElement('tr')
+        const id = 'notification-id' + element.productId
+        tr.setAttribute('id', id)
+        createRowElement(element.productType, tr)
+        createRowElement(element.price, tr)
+        createRowElement(element.buyer, tr)
+        let acceptTd = document.createElement('td')
+        let acceptButton = document.createElement('button')
+        acceptButton.textContent = '+'
+        acceptButton.addEventListener('click', () => {
+            const data = {
+                type: 'acceptProductSale',
+                payload: {
+                    productId : element.productId,
+                    buyer: element.buyer
+                }
+            }
+            connection.send(JSON.stringify(data))
+        })
+        acceptTd.appendChild(acceptButton)
+        tr.appendChild(acceptTd)
+        let removeTd = document.createElement('td')
+        let removeButton = document.createElement('button')
+        removeButton.textContent = '-'
+        removeButton.addEventListener('click', () => {
+            const data = {
+                type: 'denyProductSale',
+                payload: {
+                    productId : element.productId,
+                    buyer: element.buyer
+                }
+            }
+            connection.send(JSON.stringify(data))
+        })
+        removeTd.appendChild(removeButton)
+        tr.appendChild(removeTd)
+        table.appendChild(tr)
+    })
+}
+
+function createRowElement(textContent, tr) {
     let td = document.createElement('td')
     td.textContent = textContent
     //add classlist
@@ -598,13 +642,15 @@ connection.onmessage = function(evt) {
         handleNotification(payload)
         break
       case 'pending_orders':
-        // handle pending orders here
+        handlePendingOrders(payload)
         break
       case 'order_history_request':
         updateOrderHistory(payload)
         break
       case 'subscribed_product':
-        handleSubscribe(payload)
+        handleSubscriptionNotification
+    (payload)
+        break
       default:
         console.log(`Unknown data type: ${data.type}`)
     }

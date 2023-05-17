@@ -98,13 +98,13 @@
                             <tr id="list-titles">
                                 <td>ID</td>
                                 <td>Name</td>
-                                <td>Category</td>
+                                <td>Type</td>
                                 <td>Price</td>
                                 <td>Production Year</td>
                                 <td>Color</td>
                                 <td>Condition</td>
                                 <td>Seller</td>
-                                <td>Cart</td>
+                                <td>Add</td>
                             </tr>
                         </table>
                     </div>
@@ -163,11 +163,10 @@
             <div id="content" class="content-profile">
                 <div id="notification-container" class="tab">
                     <span class="title">Notifications</span>
-                    <div class="content-container">
+                    <div class="content-container" class="table-content-container">
                         <table id="notifications-table">
-                            <tr class="notification-titles">
-                                <td>ID</td>
-                                <td>Name</td>
+                            <tr class="table-titles">
+                                <td>Type</td>
                                 <td>Price</td>
                                 <td>Cart</td>
                                 <td>Remove</td>
@@ -184,18 +183,15 @@
                         <div class="from-to-container">
                             <span>From</span>
                             <input id="filter-date" type="date" placeholder="From">
-                            <span>To</span>
-                            <input type="date">
                         </div>                
                     </div>
                     <button id="filter-order-history-btn" class="hover-button">Filter</button>
                 </div>
                 <div id="pending-order-container" class="tab">
-                    <span class="title">Your Info</span>
-                    <div class="content-container">
+                    <span class="title">Pending Orders</span>
+                    <div class="content-container" class="table-content-container">
                         <table id="pending-order-table">
                             <tr class="table-titles">
-                                <td>Id</td>
                                 <td>Type</td>
                                 <td>Price</td>
                                 <td>Buyer</td>
