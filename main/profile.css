@@ -30,6 +30,8 @@
     flex: 1;
     display: flex;
     flex-direction: row;
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -59,12 +61,34 @@
     margin-left: 3px;
 }
 
+.tab {
+
+}
+
 .tab > .title {
     font-family: 'Quicksand', sans-serif;
     user-select: none;
     font-size: 20px;
     margin-top: 20px;
     align-self: center;
+}
+
+#pending-order-table {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.table-content-container {
+
+}
+
+.table-titles {
+    width: 100%;
+
+}
+
+.table-titles td {
+    font-family: 'Quicksand', sans-serif;
+    margin-right: 10px;
 }
 
 .content-container {
