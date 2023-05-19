@@ -160,8 +160,12 @@ function changeToProfile() {
     if (publish) {
         logo.removeChild(publish)
     }
-    const data = {
+    let data = {
         type: 'notifications'
+    }
+    connection.send(JSON.stringify(data))
+    data = {
+        type: 'pendingOrderRequest'
     }
     connection.send(JSON.stringify(data))
 }
@@ -413,8 +417,8 @@ function handlePendingOrders(orders) {
         let tr = document.createElement('tr')
         const id = 'notification-id' + element.productId
         tr.setAttribute('id', id)
-        createRowElement(element.productType, tr)
-        createRowElement(element.price, tr)
+        createRowElement(element.product.productType, tr)
+        createRowElement(element.product.price, tr)
         createRowElement(element.buyer, tr)
         let acceptTd = document.createElement('td')
         let acceptButton = document.createElement('button')
@@ -423,8 +427,8 @@ function handlePendingOrders(orders) {
             const data = {
                 type: 'acceptProductSale',
                 payload: {
-                    productId : element.productId,
-                    buyer: element.buyer
+                    productId : element.product.productId,
+                    buyer: element.buyerId
                 }
             }
             connection.send(JSON.stringify(data))
@@ -438,8 +442,8 @@ function handlePendingOrders(orders) {
             const data = {
                 type: 'denyProductSale',
                 payload: {
-                    productId : element.productId,
-                    buyer: element.buyer
+                    productId : element.product.productId,
+                    buyer: element.buyerId
                 }
             }
             connection.send(JSON.stringify(data))
@@ -658,4 +662,17 @@ connection.onmessage = function(evt) {
         console.log(`Unknown data type: ${data.type}`)
     }
   }
-  
+/**
+ * Method for converting entered password to a sha256 encrypted password using JavaScript built in crypto library.
+ * @param password user created password
+ * @returns {Promise<ArrayBuffer>} A Promise that resolves to an ArrayBuffer.
+ */
+
+/*
+function hashPassword(password) {
+    const hash = crypto.createHash('sha256');
+    hash.update(password);
+    const hashedPassword = hash.digest('hex');
+    return hashedPassword;
+}
+ */
