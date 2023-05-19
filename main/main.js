@@ -84,6 +84,7 @@ submitPublishButton.addEventListener("click", () => {
                 payload: {
                 productType: document.getElementById('product-category').value,
                 price: document.getElementById('product-price').value,
+                //price: document.getElementById('product-price').value, Ej gjort detta vad jag vet men det fanns med i min fil
                 date: document.getElementById('product-year').value,
                 colour: document.getElementById('product-colour').value,
                 condition: document.getElementById('product-condition').value,
