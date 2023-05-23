@@ -425,12 +425,16 @@ function handlePendingOrders(orders) {
         let acceptButton = document.createElement('button')
         acceptButton.textContent = '+'
         acceptButton.addEventListener('click', () => {
-            const data = {
+            let data = {
                 type: 'acceptProductSale',
                 payload: {
                     productId : element.product.productId,
                     buyer: element.buyerId
                 }
+            }
+            connection.send(JSON.stringify(data))
+            data = {
+                type: 'pendingOrderRequest'
             }
             connection.send(JSON.stringify(data))
         })
@@ -440,12 +444,16 @@ function handlePendingOrders(orders) {
         let removeButton = document.createElement('button')
         removeButton.textContent = '-'
         removeButton.addEventListener('click', () => {
-            const data = {
+            let data = {
                 type: 'denyProductSale',
                 payload: {
                     productId : element.product.productId,
                     buyer: element.buyerId
                 }
+            }
+            connection.send(JSON.stringify(data))
+            data = {
+                type: 'pendingOrderRequest'
             }
             connection.send(JSON.stringify(data))
         })
