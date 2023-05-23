@@ -1,4 +1,5 @@
-const connection = new WebSocket('ws://127.0.0.1:8080')
+//const connection = new WebSocket('ws://127.0.0.1:8080')
+const connection = new WebSocket('ws://192.168.228.78:8080')
 var cart = []
 var userId
 var username
@@ -655,6 +656,10 @@ function showLoading(button) {
     }, 3000)
 }
 
+handlePendingOrderNotification(payload) {
+    addNotification
+}
+
 
 connection.onmessage = function(evt) {
     const data = JSON.parse(evt.data)
@@ -683,6 +688,9 @@ connection.onmessage = function(evt) {
         break
       case 'subscribed_product':
         handleSubscriptionNotification
+        break
+      case 'pending_order_notification':
+        handlePendingOrderNotification(payload)
     (payload)
         break
       default:
