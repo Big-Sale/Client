@@ -139,17 +139,14 @@ closeCartButton.addEventListener("click", () => {
 })
 
 subscribeButton.addEventListener('click', () => {
-    let typeTerm = document.getElementById('search-ionput').value
+    let typeTerm = document.getElementById('search-input').value
 
     if(typeTermValidated(typeTerm)) {
         const data = {
             type: 'subscribe',
-                payload: {
-                    typeTerm
-            },
+            payload: typeTerm
         }
         connection.send(JSON.stringify(data))
-        console.log(data)
     }
 })
 
