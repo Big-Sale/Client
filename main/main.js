@@ -320,7 +320,6 @@ function handleSubscriptionNotification(product) {
         const id = 'notification-id' + product.productId
         tr.setAttribute('id', id)
 
-        createRowElement(product.productId, tr)
         createRowElement(product.productName, tr)
         createRowElement(product.price, tr)
 
