@@ -39,6 +39,8 @@ const submitRegisterButton = document.getElementById('submit-signup')
 const loginButton = document.getElementById('login')
 const loginRedirect = document.getElementById('redirect')
 
+const subscribeButton = document.getElementById('subscribe-button')
+
 //store group
 closePublishPopUpButton.addEventListener("click", function() {
     publishPopUp.classList.remove("show")
@@ -136,6 +138,25 @@ closeCartButton.addEventListener("click", () => {
     footer.classList.remove("blur")
 })
 
+subscribeButton.addEventListener('click', () => {
+    let typeTerm = document.getElementById('search-ionput').value
+
+    if(typeTermValidated(typeTerm)) {
+        const data = {
+            type: 'subscribe',
+                payload: {
+                    typeTerm
+            },
+        }
+        connection.send(JSON.stringify(data))
+        console.log(data)
+    }
+})
+
+function typeTermValidated(typeTerm) {
+    return typeTerm.length > 0
+    // lol
+}
 
 /**
  * Todo

@@ -22,10 +22,6 @@
     transition: background-color 0.25s, box-shadow 0.3s;
 }
 
-
-
-
-
 .content-profile {
     flex: 1;
     display: flex;
@@ -151,10 +147,14 @@ Generic from-to font placement
 
 
 
+#search-button {
+    margin-left: 10px;
+}
 
-
-
-
+#subscribe-button {
+    margin-left: 10px; 
+    border-radius: 10px;
+}
 
 
 
