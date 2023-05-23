@@ -656,7 +656,7 @@ function showLoading(button) {
     }, 3000)
 }
 
-handlePendingOrderNotification(payload) {
+function handlePendingOrderNotification(payload) {
     addNotification
 }
 
