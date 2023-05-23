@@ -1,5 +1,5 @@
-//const connection = new WebSocket('ws://127.0.0.1:8080')
-const connection = new WebSocket('ws://192.168.228.78:8080')
+const connection = new WebSocket('ws://127.0.0.1:8080')
+//const connection = new WebSocket('ws://192.168.228.78:8080')
 var cart = []
 var userId
 var username
