@@ -321,7 +321,8 @@ function handleLogin(payload) {
         logoClick.addEventListener('click', changeToStore)
         profileLink.addEventListener('click', changeToProfile)
         document.getElementById('header-username').textContent = username
-        if (payload.notify) {
+        console.log(payload.notify)
+        if (payload.notify === true) {
             addNotification()
         }
     } else {
@@ -483,7 +484,7 @@ function handlePendingOrders(orders) {
 function createRowElement(textContent, tr) {
     let td = document.createElement('td')
     td.textContent = textContent
-    //add classlist
+    //add class§
     tr.appendChild(td)
 }
 
