@@ -434,52 +434,56 @@ function handlePendingOrders(orders) {
         table.removeChild(rows[i])
     }
     orders.forEach(element => {
-        let tr = document.createElement('tr')
-        const id = 'notification-id' + element.productId
-        tr.setAttribute('id', id)
-        createRowElement(element.product.productType, tr)
-        createRowElement(element.product.price, tr)
-        createRowElement(element.buyer, tr)
-        let acceptTd = document.createElement('td')
-        let acceptButton = document.createElement('button')
-        acceptButton.textContent = '+'
-        acceptButton.addEventListener('click', () => {
-            let data = {
-                type: 'acceptProductSale',
-                payload: {
-                    productId : element.product.productId,
-                    buyer: element.buyerId
-                }
-            }
-            connection.send(JSON.stringify(data))
-            data = {
-                type: 'pendingOrderRequest'
-            }
-            connection.send(JSON.stringify(data))
-        })
-        acceptTd.appendChild(acceptButton)
-        tr.appendChild(acceptTd)
-        let removeTd = document.createElement('td')
-        let removeButton = document.createElement('button')
-        removeButton.textContent = '-'
-        removeButton.addEventListener('click', () => {
-            let data = {
-                type: 'denyProductSale',
-                payload: {
-                    productId : element.product.productId,
-                    buyer: element.buyerId
-                }
-            }
-            connection.send(JSON.stringify(data))
-            data = {
-                type: 'pendingOrderRequest'
-            }
-            connection.send(JSON.stringify(data))
-        })
-        removeTd.appendChild(removeButton)
-        tr.appendChild(removeTd)
-        table.appendChild(tr)
+        addPendingToTable(element, table)
     })
+}
+
+function addPendingToTable(element, table) {
+    let tr = document.createElement('tr')
+    const id = 'notification-id' + element.productId
+    tr.setAttribute('id', id)
+    createRowElement(element.product.productType, tr)
+    createRowElement(element.product.price, tr)
+    createRowElement(element.buyer, tr)
+    let acceptTd = document.createElement('td')
+    let acceptButton = document.createElement('button')
+    acceptButton.textContent = '+'
+    acceptButton.addEventListener('click', () => {
+        let data = {
+            type: 'acceptProductSale',
+            payload: {
+                productId : element.product.productId,
+                buyer: element.buyerId
+            }
+        }
+        connection.send(JSON.stringify(data))
+        data = {
+            type: 'pendingOrderRequest'
+        }
+        connection.send(JSON.stringify(data))
+    })
+    acceptTd.appendChild(acceptButton)
+    tr.appendChild(acceptTd)
+    let removeTd = document.createElement('td')
+    let removeButton = document.createElement('button')
+    removeButton.textContent = '-'
+    removeButton.addEventListener('click', () => {
+        let data = {
+            type: 'denyProductSale',
+            payload: {
+                productId : element.product.productId,
+                buyer: element.buyerId
+            }
+        }
+        connection.send(JSON.stringify(data))
+        data = {
+            type: 'pendingOrderRequest'
+        }
+        connection.send(JSON.stringify(data))
+    })
+    removeTd.appendChild(removeButton)
+    tr.appendChild(removeTd)
+    table.appendChild(tr)
 }
 
 function createRowElement(textContent, tr) {
@@ -657,7 +661,12 @@ function showLoading(button) {
 }
 
 function handlePendingOrderNotification(payload) {
-    addNotification
+    if (profile.classList.contains('hidden')) {
+        addNotification()
+    } else {
+        let table = document.getElementById('pending-order-table')
+        addPendingToTable(payload, table)
+    }
 }
 
 
@@ -687,11 +696,10 @@ connection.onmessage = function(evt) {
         updateOrderHistory(payload)
         break
       case 'subscribed_product':
-        handleSubscriptionNotification
+        handleSubscriptionNotification(payload)
         break
       case 'pending_order_notification':
         handlePendingOrderNotification(payload)
-    (payload)
         break
       default:
         console.log(`Unknown data type: ${data.type}`)
