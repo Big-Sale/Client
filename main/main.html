@@ -142,24 +142,6 @@
                     <button id="submit-publish-btn" class="publish-product-button">Submit</button>
                     <button id="close-publish-popup-btn" class="close-publish-container-button">Close</button>
                 </div>
-            </div>
-            <div id="cart-popup-container">
-                <span>Your Cart</span>
-                <div id="cart-container">
-                    <table id="cart-table">
-                        <tr class="cart-titles">
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Price</td>
-                            <td>Remove</td>
-                        </tr> 
-                        
-                    </table>
-                </div>
-                <div class="cart-button-container">
-                    <button id="checkout-btn">Check-Out</button>
-                    <button id="close-cart-btn">Close</button>
-                </div>
             </div>        
         </div>
         <div id="profile-content" >
@@ -180,7 +162,14 @@
                 <div id="order-history-container" class="tab">
                     <span class="title">Order History</span>
                     <div id="searched-orders" class="content-container">
-                        
+                        <table id="order-history-table">
+                            <tr class="table-titles">
+                                <td>Type</td>
+                                <td>Price</td>
+                                <td>Condition</td>
+                                <td>Date</td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="order-history-filter-container">
                         <div class="from-to-container">
@@ -210,13 +199,15 @@
     <div id="cart-popup-container">
         <span>Your Cart</span>
         <div id="cart-container">
-            <ul>
-                <li>"Vem kan vispa förutan visp" - Samlade utgåvor av Vispcent Visplund</li>
-                <li>"Hur man packar ihop efter en arbetsdag" - Anthon</li>
-                <li>Förbrukade Konsertbiljetter</li>
-                <li>"Samlade Harklingar" av Christian Edvaldi</li>
-                <li>Kned, alt spork</li>
-            </ul>
+            <table id="cart-table">
+                <tr class="cart-titles">
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td>Remove</td>
+                </tr> 
+                
+            </table>
         </div>
         <div class="cart-button-container">
             <button id="checkout-btn">Check-Out</button>

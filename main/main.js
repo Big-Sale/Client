@@ -1,5 +1,4 @@
 const connection = new WebSocket('ws://127.0.0.1:8080')
-//const connection = new WebSocket('ws://192.168.228.78:8080')
 var cart = []
 var userId
 var username
@@ -140,20 +139,20 @@ closeCartButton.addEventListener("click", () => {
 })
 
 subscribeButton.addEventListener('click', () => {
-    let typeTerm = document.getElementById('search-input').value
+    let typeTerm = document.getElementById('search-input')
 
     if(typeTermValidated(typeTerm)) {
         const data = {
             type: 'subscribe',
-            payload: typeTerm
+            payload: typeTerm.value
         }
         connection.send(JSON.stringify(data))
     }
+    typeTerm.value = ''
 })
 
 function typeTermValidated(typeTerm) {
     return typeTerm.length > 0
-    // lol
 }
 
 /**
@@ -499,7 +498,7 @@ filterBtn.addEventListener('click', function() {
     let filterDate = document.getElementById('filter-date')
     if (filterDate.value.length === 0) return
     const data = {
-        type: 'OrderHistoryRequest',
+        type: 'orderHistoryRequest',
         payload: {
             userId: userId, 
             date: filterDate.value
@@ -509,22 +508,19 @@ filterBtn.addEventListener('click', function() {
 })
 
 function updateOrderHistory(payload) {
-    let searchedOrders = document.getElementById('searched-orders')
-    while (searchedOrders.firstChild) {
-        searchedOrders.removeChild(searchedOrders.lastChild)
+    const table = document.getElementById('order-history-table')
+    const rows = table.querySelectorAll('tr')
+    for (let i = 1; i < rows.length; i++) {
+        table.removeChild(rows[i])
     }
-    if (payload.length === 0) {
-        let empty = document.createElement('h4')
-        empty.textContent = 'Nothing to show'
-        searchedOrders.appendChild(empty)
-    } else {
-        payload.forEach(element => {
-            let id = document.createElement('h4')
-            console.log(element.productId)
-            id.textContent = element.productId
-            searchedOrders.appendChild(id)
-        })
-    }
+    payload.forEach(element => {
+        let tr = document.createElement('tr')
+        createRowElement(element.productType, tr)
+        createRowElement(element.price, tr)
+        createRowElement(element.condition, tr)
+        createRowElement(element.dateOfPurchase, tr)
+        table.appendChild(tr)
+    })
 }
 
 
