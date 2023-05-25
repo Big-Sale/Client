@@ -9,7 +9,6 @@ const login = document.getElementById('login-content')
 profile.classList.add('hidden')
 store.classList.add("hidden")
 
-
 const searchButton = document.getElementById("search-button")
 const profileLink = document.getElementById("profile-link")
 const publishPopUp = document.getElementById("publish-popup-container")
@@ -24,9 +23,7 @@ const footer = document.getElementById("footer")
 const content = document.getElementById("content")
 const logoClick = document.getElementById('back-to-store')
 const logo = document.getElementById('logo-div')
-
 const filterBtn = document.getElementById('filter-order-history-btn')
-
 const form = document.querySelector('form')
 const usernameField = form.querySelector('input[name="username"]')
 const passwordField = form.querySelector('input[name="password"]')
@@ -37,10 +34,8 @@ const registerContainer = document.getElementById('register')
 const submitRegisterButton = document.getElementById('submit-signup')
 const loginButton = document.getElementById('login')
 const loginRedirect = document.getElementById('redirect')
-
 const subscribeButton = document.getElementById('subscribe-button')
 
-//store group
 closePublishPopUpButton.addEventListener("click", function() {
     publishPopUp.classList.remove("show")
     header.classList.remove("blur")
@@ -59,9 +54,9 @@ searchButton.addEventListener('click', () => {
       },
     }
     connection.send(JSON.stringify(data))
-  })
+})
 
-  function addNotification() {
+function addNotification() {
     const svg = document.querySelector('.user-nav > svg')
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle")
     circle.setAttribute('id', 'notification-circle')
@@ -70,7 +65,7 @@ searchButton.addEventListener('click', () => {
     circle.setAttribute("r", "3")
     circle.setAttribute("fill", "red")
     svg.appendChild(circle)
-  }
+}
   
 
 submitPublishButton.addEventListener("click", () => {
@@ -85,7 +80,6 @@ submitPublishButton.addEventListener("click", () => {
                 payload: {
                 productType: document.getElementById('product-category').value,
                 price: document.getElementById('product-price').value,
-                //price: document.getElementById('product-price').value, Ej gjort detta vad jag vet men det fanns med i min fil
                 date: document.getElementById('product-year').value,
                 colour: document.getElementById('product-colour').value,
                 condition: document.getElementById('product-condition').value,
@@ -96,7 +90,6 @@ submitPublishButton.addEventListener("click", () => {
     }
 })
   
-
 cartButton.addEventListener("click", () => {
     cartPopUp.classList.add("show")
     header.classList.add("blur")
@@ -116,18 +109,15 @@ checkoutButton.addEventListener("click", () => {
       type: 'buyProduct',
       payload: cart,
     }
-    
     connection.send(JSON.stringify(data))
     
     cart = []
-    
     const table = document.querySelector('#cart-table')
     const rows = table.querySelectorAll('tr')
-    
     for (let i = 1; i < rows.length; i++) {
       table.removeChild(rows[i])
     }
-  })
+})
 
 closeCartButton.addEventListener("click", () => {
     cartPopUp.classList.remove("show")
@@ -139,7 +129,6 @@ closeCartButton.addEventListener("click", () => {
 
 subscribeButton.addEventListener('click', () => {
     let typeTerm = document.getElementById('search-input')
-
     if(typeTermValidated(typeTerm)) {
         const data = {
             type: 'subscribe',
@@ -154,17 +143,10 @@ function typeTermValidated(typeTerm) {
     return typeTerm.length > 0
 }
 
-/**
- * Todo
- * @returns 
- */
-
 function infoValidated() {
     return true
 }
 
-
-//change scene group
 function changeToProfile() {
     let circle = document.getElementById('notification-circle')
     if (circle) {
@@ -208,8 +190,6 @@ function changeToStore() {
         logo.appendChild(button)
     }
 }
-
-//handle message group
 
 function addToCart(productId, name, price) {
     return function() {     
@@ -378,14 +358,6 @@ function handleSignup(id) {
     }
 }
 
-function handlePublishProduct(data) {
-    if(success) {
-
-    } else {
-
-    }
-}
-
 function handleNotification(data) {
     const table = document.getElementById('notifications-table')
     const rows = table.querySelectorAll('tr')
@@ -421,7 +393,6 @@ function handleNotification(data) {
         tr.appendChild(removeTd)
         table.appendChild(tr)
     })
-    
 }
 
 function handlePendingOrders(orders) {
@@ -486,11 +457,8 @@ function addPendingToTable(element, table) {
 function createRowElement(textContent, tr) {
     let td = document.createElement('td')
     td.textContent = textContent
-    //add class§
     tr.appendChild(td)
 }
-
-//profile group 
 
 filterBtn.addEventListener('click', function() {
     let filterDate = document.getElementById('filter-date')
@@ -521,35 +489,17 @@ function updateOrderHistory(payload) {
     })
 }
 
-
-//auth group
-
 loginRedirect.addEventListener('click', () => {
     container.classList.remove("expanded")
     loginContainer.classList.remove("removed")
     registerContainer.classList.remove("visible")
 })
 
-/**
- * When the button for registering is clicked, the menu for 
- * submitting user info is shown by adding CSS classes to the 
- * corresponding elements.
- */
 registerButton.addEventListener('click', () => {
     container.classList.add("expanded")
     loginContainer.classList.add("removed")
     registerContainer.classList.add("visible")
 })
-
-/**
- * When login is pressed, input is validated and the load-icon
- * should be shown while the request is processing. Async, await 
- * something something
- * 
- * **SIDENOTE** Maybe some technical debt here; I did the login-part
- * as a form, that's why theres no actual button corresponding to
- * this function.
-*/
 
 loginButton.addEventListener('click', () => {
     if(!checkUsername() || !checkPassword()) {
@@ -566,11 +516,6 @@ loginButton.addEventListener('click', () => {
     username = usernameField.value
     connection.send(JSON.stringify(data))
 })
-
-/**
- * When the button for submitting user info is clicked, the load
- * icon should be shown while waiting for the response. Async?
- */
 
 submitRegisterButton.addEventListener('click', () => {
     if(validUserDetails()) {
@@ -591,61 +536,20 @@ submitRegisterButton.addEventListener('click', () => {
     }
 })
 
-/** 
- * <----------------------------------- Functions ----------------------------------->
- * 
- *          I've put stuff defined with function here. You get the idea.
- * 
- * <--------------------------------------------------------------------------------->
-*/
-
-/**
- * Process user input for validity when registering as a new user
- * @returns 
- */
-
 function validUserDetails() {
-    // TODO
     return true
 }
 
-/**
- * Checks to see whether username input is valid or not, appends 
- * necessary error messages if not.
- * @returns whether or not the argument is valid
- */
-
 function checkUsername() {
-    if (usernameField.value.length < 3) {
-        usernameField.insertAdjacentHTML('afterend', '<div class="error">Username must be at least 5 characters long</div>')
-        return false
-      }
-      return true
+    return true
 }
-
-
-/**
- * Checks to see whether password input is valid or not, appends 
- * necessary error messages if not.
- * @returns whether or not the argument is valid
- */
 
 function checkPassword() {
     if (passwordField.value === '') {
-        passwordField.insertAdjacentHTML('afterend', '<div class="error">Password cannot be empty</div>')
         return false
-      }
-      return true
+    }
+    return true
 }
-
-/**
- * Adds a loading icon to the classlist of the button added. This
- * CSS is wonky as fuck and should be redone as one needs to apply
- * the correct x and y index for the load bar for each individual
- * button (see .btn-submit-signup .lds ripple and below column for
- * example)
- * @param {*} button 
- */
 
 function showLoading(button) {
     button.classList.add('loading')
@@ -662,7 +566,6 @@ function handlePendingOrderNotification(payload) {
         addPendingToTable(payload, table)
     }
 }
-
 
 connection.onmessage = function(evt) {
     const data = JSON.parse(evt.data)
@@ -698,18 +601,4 @@ connection.onmessage = function(evt) {
       default:
         console.log(`Unknown data type: ${data.type}`)
     }
-  }
-/**
- * Method for converting entered password to a sha256 encrypted password using JavaScript built in crypto library.
- * @param password user created password
- * @returns {Promise<ArrayBuffer>} A Promise that resolves to an ArrayBuffer.
- */
-
-/*
-function hashPassword(password) {
-    const hash = crypto.createHash('sha256');
-    hash.update(password);
-    const hashedPassword = hash.digest('hex');
-    return hashedPassword;
 }
- */

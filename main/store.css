@@ -1,19 +1,19 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .publish-button {
-  border: none;
-  border-radius: 5px;
-  background-color: #59a56b;
-  padding: 10px;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.25s, box-shadow 0.3s;
+    border: none;
+    border-radius: 5px;
+    background-color: #59a56b;
+    padding: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.25s, box-shadow 0.3s;
 }
 
 .content {
@@ -21,11 +21,6 @@ input::-webkit-inner-spin-button {
     display: flex;
     flex-direction: column;
 }
-
-
-
-
-/* Search field stuff */
 
 .search-field-container {
     display: flex;
@@ -57,7 +52,6 @@ input::-webkit-inner-spin-button {
 
 .search-input:focus {
     outline: none;
-    
 }
 
 .search-button {
@@ -76,13 +70,10 @@ input::-webkit-inner-spin-button {
     animation: changeFill 0.5s forwards; 
 }
 
-/* Search Filter stuff */
-
 .filter-container {
     display:flex;
     flex-direction: row;
     justify-content: center;
-    
 }
 
 .filter-container input, .filter-container select {
@@ -95,21 +86,6 @@ input::-webkit-inner-spin-button {
 .filter-container input {
     width: 10%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .publish-button:hover, .publish-product-button:hover, #checkout-btn:hover {
     color: black;
@@ -137,7 +113,6 @@ input::-webkit-inner-spin-button {
     font-family: 'Quicksand', sans-serif;
 }
 
-
 #product-list, #product-list td {
     padding-left: 40px;
     height: 40px;
@@ -151,12 +126,6 @@ input::-webkit-inner-spin-button {
 .cart-binary-btn {
     font-size: 15px;
 }
-
-
-
-
-
-
 
 #publish-popup-container, #cart-popup-container {
     display: none;
@@ -173,7 +142,6 @@ input::-webkit-inner-spin-button {
     background-color: rgb(255, 255, 255);
     opacity: 0;
 }
-
 
 #publish-popup-container.show, #cart-popup-container.show {
     display: flex;
@@ -240,14 +208,6 @@ input::-webkit-inner-spin-button {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.25s, box-shadow 0.3s;
 }
-
-
-
-
-/*
-Keyframes
-*/
-
 
 @keyframes changeFill {
     from {
