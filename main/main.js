@@ -6,7 +6,6 @@ var username
 const store = document.getElementById('store-content')
 const profile = document.getElementById('profile-content')
 const login = document.getElementById('login-content')
-//login.classList.add('hidden')
 profile.classList.add('hidden')
 store.classList.add("hidden")
 
@@ -321,7 +320,6 @@ function handleLogin(payload) {
         logoClick.addEventListener('click', changeToStore)
         profileLink.addEventListener('click', changeToProfile)
         document.getElementById('header-username').textContent = username
-        console.log(payload.notify)
         if (payload.notify === true) {
             addNotification()
         }
