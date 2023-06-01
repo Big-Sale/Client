@@ -129,7 +129,7 @@ closeCartButton.addEventListener("click", () => {
 
 subscribeButton.addEventListener('click', () => {
     let typeTerm = document.getElementById('search-input')
-    if(typeTermValidated(typeTerm)) {
+    if(typeTermValidated(typeTerm.value)) {
         const data = {
             type: 'subscribe',
             payload: typeTerm.value
